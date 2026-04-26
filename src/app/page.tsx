@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowRightIcon, SparklesIcon } from "@heroicons/react/24/outline";
 
 import { Badge } from "@/components/ui/badge";
@@ -13,8 +15,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Home() {
+  const { t } = useLanguage();
+  const copy = t.home;
+
   return (
       <main className="mx-auto grid min-h-[calc(100vh-142px)] max-w-5xl gap-10 px-6 py-16 lg:grid-cols-2 lg:items-center">
         <section>
@@ -37,40 +43,39 @@ export default function Home() {
           </Badge>
         </div>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-foreground sm:text-6xl">
-          Start clean, then make it yours.
+          {copy.title}
         </h1>
         <p className="mt-6 text-lg leading-8 text-muted-foreground">
-          This template is intentionally small: app router, TypeScript, Tailwind
-          CSS, and shadcn-style components without an icon library.
+          {copy.subtitle}
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Button className="gap-2">
-            Get started
+            {copy.primaryAction}
             <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
           </Button>
-          <Button variant="outline">View components</Button>
+          <Button variant="outline">{copy.secondaryAction}</Button>
         </div>
       </section>
 
       <Card>
         <CardHeader>
-          <CardTitle>Starter Form</CardTitle>
+          <CardTitle>{copy.form.title}</CardTitle>
           <CardDescription>
-            A tiny component sample for your next project.
+            {copy.form.description}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="project-name">Project name</Label>
-            <Input id="project-name" placeholder="My next app" />
+            <Label htmlFor="project-name">{copy.form.nameLabel}</Label>
+            <Input id="project-name" placeholder={copy.form.namePlaceholder} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="project-notes">Notes</Label>
-            <Textarea id="project-notes" placeholder="What are you building?" />
+            <Label htmlFor="project-notes">{copy.form.notesLabel}</Label>
+            <Textarea id="project-notes" placeholder={copy.form.notesPlaceholder} />
           </div>
           <div className="flex items-center gap-2">
             <Checkbox id="template-ready" />
-            <Label htmlFor="template-ready">Ready to customize</Label>
+            <Label htmlFor="template-ready">{copy.form.readyLabel}</Label>
           </div>
         </CardContent>
       </Card>

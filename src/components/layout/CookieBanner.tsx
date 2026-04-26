@@ -10,9 +10,12 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useAppContext } from "@/context/AppContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { createCookiePreferences } from "@/utils/cookiePreferences";
 
 export function CookieBanner() {
+  const { t } = useLanguage();
+  const copy = t.cookieBanner;
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [selectedCookies, setSelectedCookies] = useState({
     analyticalCookies: true,
@@ -75,7 +78,7 @@ export function CookieBanner() {
           <div className="ui-card-content flex flex-col gap-4 pt-6">
             <div className="flex flex-wrap items-center gap-3">
               <p className="ui-card-description flex-1 min-w-0">
-                Pro správné fungování webu používáme cookies.
+                {copy.message}
               </p>
               <Button
                   aria-expanded={isDetailsOpen}
@@ -84,20 +87,20 @@ export function CookieBanner() {
                   variant="ghost"
                   onClick={() => setIsDetailsOpen((current) => !current)}
               >
-                Více
+                {copy.more}
                 <ChevronDownIcon
                     aria-hidden="true"
                     className={`h-4 w-4 transition-transform ${isDetailsOpen ? "rotate-180" : ""}`}
                 />
               </Button>
               <Button type="button" variant="outline" onClick={rejectCookies}>
-                Odmítnout
+                {copy.reject}
               </Button>
               <Button
                 type="button"
                 onClick={isDetailsOpen ? saveSelectedCookies : acceptAllCookies}
               >
-                {isDetailsOpen ? "Uložit výběr" : "Přijmout vše"}
+                {isDetailsOpen ? copy.saveSelection : copy.acceptAll}
               </Button>
             </div>
 
@@ -123,7 +126,7 @@ export function CookieBanner() {
                     className="ui-card-description"
                     htmlFor="analytical-cookies"
                   >
-                    Používáme analytické cookies, ať máme přehled o návštěvnosti, kampaních a konverzi.
+                    {copy.analytical}
                   </label>
                 </div>
                 <div className="flex gap-3">
@@ -146,7 +149,8 @@ export function CookieBanner() {
                     className="ui-card-description"
                     htmlFor="technical-cookies"
                   >
-                    Technické cookies jsou nezbytné pro správné fungování webových stránek. Umožňují například ukládání vyplněných údajů nebo obsahu košíku, takže při další návštěvě nemusíte vše zadávat znovu.                  </label>
+                    {copy.technical}
+                  </label>
                 </div>
               </div>
             ) : null}

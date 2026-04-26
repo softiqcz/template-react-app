@@ -1,14 +1,15 @@
 "use client";
 
 import {
-    ArrowTopRightOnSquareIcon,
-    Bars3Icon,
-    BugAntIcon,
-    ChevronDownIcon,
-    Cog6ToothIcon,
-    MoonIcon,
-    SunIcon,
-    XMarkIcon,LinkIcon
+  ArrowTopRightOnSquareIcon,
+  Bars3Icon,
+  BugAntIcon,
+  ChevronDownIcon,
+  Cog6ToothIcon, FlagIcon,
+  LinkIcon,
+  MoonIcon,
+  SunIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,11 +19,20 @@ import { Button } from "@/components/ui/button";
 import { ReportBugDialog } from "@/components/layout/ReportBugDialog";
 import { Switch } from "@/components/ui/switch";
 import { useAppContext } from "@/context/AppContext";
+import { useLanguage } from "@/context/LanguageContext";
+import { languages } from "@/i18n/translations";
 
 const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Components", href: "#components" },
-  { label: "Docs", href: "#docs" },
+  { labelKey: "home", href: "/" },
+  { labelKey: "components", href: "#components" },
+  { labelKey: "docs", href: "#docs" },
+] as const;
+
+const externalLinks = [
+  {
+    href: "https://softiq.cz",
+    label: "softIQ",
+  },
 ];
 
 const logoSource = "/images/logos/logo.png";
@@ -30,6 +40,8 @@ const logoSource = "/images/logos/logo.png";
 export function Navbar() {
   const { appName, isDark, openCookiePreferences, toggleTheme } =
     useAppContext();
+  const { language, setLanguage, t } = useLanguage();
+  const copy = t.navbar;
   const [isOpen, setIsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isBugReportOpen, setIsBugReportOpen] = useState(false);
@@ -65,6 +77,9 @@ export function Navbar() {
   }
 
   function renderMenuContent(switchId: string, isMobile: boolean) {
+    const languageSwitchId = `${switchId}-language`;
+    const currentLanguage = languages.find((item) => item.code === language);
+
     return (
       <>
         <div
@@ -89,7 +104,7 @@ export function Navbar() {
                   className={"size-4 shrink-0"}
                   aria-hidden="true"
                 />
-                {item.label}
+                {copy.navItems[item.labelKey]}
               </Link>
             </Button>
           ))}
@@ -112,7 +127,7 @@ export function Navbar() {
               className={"size-4 shrink-0"}
               aria-hidden="true"
             />
-            Nastavení
+            {copy.settings}
             <ChevronDownIcon
               className={`size-4 transition-transform ${
                 isSettingsOpen ? "rotate-180" : ""
@@ -140,12 +155,12 @@ export function Navbar() {
                     />
                   )}
                   <span className="navbar-settings-text text-foreground">
-                    {isDark ? "Tmavý" : "Světlý"} režim
+                    {isDark ? copy.themeMode.dark : copy.themeMode.light}
                   </span>
                   <span className="relative flex items-center justify-self-end">
                     <Switch
                       id={switchId}
-                      aria-label="Přepnout tmavý režim"
+                      aria-label={copy.themeMode.toggle}
                       checked={isDark}
                       onCheckedChange={toggleTheme}
                     />
@@ -167,6 +182,35 @@ export function Navbar() {
                   </span>
                 </label>
 
+                <label
+                  className="ui-button ui-button-ghost navbar-settings-menu-row cursor-pointer"
+                  htmlFor={languageSwitchId}
+                >
+                 <FlagIcon className="size-4" />
+                  <span className="navbar-settings-text text-foreground">
+                    {copy.language}: {currentLanguage?.shortLabel}
+                  </span>
+                  <span className="relative flex items-center justify-self-end">
+                    <Switch
+                      id={languageSwitchId}
+                      aria-label={copy.language}
+                      checked={language === "en"}
+                      onCheckedChange={(checked) =>
+                        setLanguage(checked ? "en" : "cs")
+                      }
+                    />
+                    <span className="pointer-events-none absolute left-0 flex h-full w-full items-center px-[3px]">
+                      {language === "en" ? (
+                        <span className="ml-auto text-[10px] leading-none">
+                          🇬🇧
+                        </span>
+                      ) : (
+                        <span className="text-[10px] leading-none">🇨🇿</span>
+                      )}
+                    </span>
+                  </span>
+                </label>
+
                 <Button
                   className="navbar-settings-menu-row"
                   type="button"
@@ -177,7 +221,7 @@ export function Navbar() {
                     className="navbar-settings-icon"
                     aria-hidden="true"
                   />
-                  <span className="navbar-settings-text">Nastavení cookies</span>
+                  <span className="navbar-settings-text">{copy.cookies}</span>
                 </Button>
 
                 <Button
@@ -190,29 +234,30 @@ export function Navbar() {
                     className="navbar-settings-icon"
                     aria-hidden="true"
                   />
-                  <span className="navbar-settings-text">Nahlásit chybu</span>
+                  <span className="navbar-settings-text">{copy.bugReport}</span>
                 </Button>
               </div>
             </div>
           ) : null}
         </div>
 
+        {externalLinks.map((item) => (
           <Button
-              asChild
-              className={
-                  isMobile ? "navbar-mobile-menu-control gap-2" : "gap-2"
-              }
-              size="sm"
-              variant="default"
+            key={item.href}
+            asChild
+            className={isMobile ? "navbar-mobile-menu-control gap-2" : "gap-2"}
+            size="sm"
+            variant="default"
           >
-              <Link href="https://softiq.cz" rel="noreferrer" target="_blank">
-                  <ArrowTopRightOnSquareIcon
-                      className={"size-4 shrink-0"}
-                      aria-hidden="true"
-                  />
-                  softIQ
-              </Link>
+            <Link href={item.href} rel="noreferrer" target="_blank">
+              <ArrowTopRightOnSquareIcon
+                className={"size-4 shrink-0"}
+                aria-hidden="true"
+              />
+              {item.label}
+            </Link>
           </Button>
+        ))}
       </>
     );
   }
@@ -258,7 +303,7 @@ export function Navbar() {
             <Button
               aria-controls="site-navbar-mobile-menu"
               aria-expanded={isOpen}
-              aria-label="Toggle navigation menu"
+              aria-label={copy.toggleMenu}
               className="ml-auto shrink-0 md:hidden"
               size="icon"
               variant="outline"

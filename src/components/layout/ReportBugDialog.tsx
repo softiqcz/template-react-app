@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/my-dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useAppContext } from "@/context/AppContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 type ReportBugDialogProps = {
   isOpen: boolean;
@@ -28,6 +29,8 @@ export function ReportBugDialog({
   onOpenChange,
 }: ReportBugDialogProps) {
   const { reportBug } = useAppContext();
+  const { t } = useLanguage();
+  const copy = t.reportBug;
   const [message, setMessage] = useState("");
 
   function handleCancel() {
@@ -57,21 +60,20 @@ export function ReportBugDialog({
             <MyDialogContent>
               <MyDialogHeader>
                 <MyDialogHeaderText>
-                  <MyDialogTitle>Nahlaste nám chybu</MyDialogTitle>
+                  <MyDialogTitle>{copy.title}</MyDialogTitle>
                   <MyDialogDescription>
-                    Řekněte nám, co se nepovedlo. My se na to podíváme a
-                    opravíme, aby se to příště nestalo.
+                    {copy.description}
                   </MyDialogDescription>
                 </MyDialogHeaderText>
                 <MyDialogCloseButton
-                  aria-label="Close bug report"
+                  aria-label={copy.close}
                   onClick={handleCancel}
                 />
               </MyDialogHeader>
 
               <Textarea
-                aria-label="Message"
-                placeholder="Vaše zpráva"
+                aria-label={copy.messageLabel}
+                placeholder={copy.placeholder}
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
               />
@@ -79,10 +81,10 @@ export function ReportBugDialog({
 
             <MyDialogFooter>
               <Button type="button" variant="outline" onClick={handleCancel}>
-                Zrušit
+                {copy.cancel}
               </Button>
               <Button type="submit" disabled={!message.trim()}>
-                Odeslat
+                {copy.submit}
               </Button>
             </MyDialogFooter>
           </form>

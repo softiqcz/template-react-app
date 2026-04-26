@@ -8,6 +8,7 @@ import {
   getCookiePreferences,
   saveCookiePreferences,
 } from "@/utils/cookiePreferences";
+import { useLanguage } from "@/context/LanguageContext";
 
 type SystemMessage = {
   message: string;
@@ -63,6 +64,7 @@ export function useAppContext() {
 const AppContext = createContext<AppContextType>(defaultContext);
 
 export function AppProvider({ children }: { children: ReactNode }) {
+  const { t } = useLanguage();
   const [isDark, setIsDark] = useState(false);
   const [beVersion, setBeVersion] = useState(defaultContext.beVersion);
   const [systemMessage, setSystemMessage] = useState(defaultContext.systemMessage);
@@ -169,7 +171,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       });
     } catch {
       setSystemMessage({
-        message: "Něco se porouchalo, napište nám na podporu",
+        message: t.common.genericSupportError,
         status: "error",
       });
     }
