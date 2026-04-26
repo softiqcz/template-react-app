@@ -1,5 +1,6 @@
-import {createContext, ReactNode, useContext, useEffect, useState} from "react";
-import {getVersionFromBe, postFeatureProposal} from "@/utils";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+
+import { getVersionFromBe, postFeatureProposal } from "@/utils";
 import {
   ColorMode,
   CookiePreferences,
@@ -28,7 +29,7 @@ type AppContextType = {
   toggleTheme: () => void;
   systemMessage: SystemMessage;
   setSystemMessage: (message: SystemMessage) => void;
-  reportBug: () => void;
+  reportBug: (message: string) => Promise<void>;
 };
 
 const defaultCookiePreferences = createCookiePreferences({
@@ -52,8 +53,8 @@ const defaultContext: AppContextType = {
   setCookiePreference: () => {},
   toggleTheme: () => {},
   systemMessage: { message: "", status: "success" },
-  setSystemMessage:() => {},
-  reportBug: () => {},
+  setSystemMessage: () => {},
+  reportBug: async () => {},
 };
 
 export function useAppContext() {
@@ -149,36 +150,44 @@ export function AppProvider({ children }: { children: ReactNode }) {
     })();
   }, []);
 
-  async function reportBug() {
-  const payload = {"data": {"message": "get message from input"}}
+  async function reportBug(message: string) {
+    const payload = { data: { message } };
+
     try {
-  const response = await postFeatureProposal(payload);
-      setSystemMessage({ message: response.data.data.message, status: "success" });
-  } catch {
-      setSystemMessage({ message: "Něco se porouchalo, napište nám na podporu", status: "error" });
+      const response = await postFeatureProposal(payload);
+      setSystemMessage({
+        message: response.data.data.message,
+        status: "success",
+      });
+    } catch {
+      setSystemMessage({
+        message: "Něco se porouchalo, napište nám na podporu",
+        status: "error",
+      });
+    }
   }
-}
+
   return (
-      <AppContext.Provider
-          value={{
-            appName: defaultContext.appName,
-            beVersion,
-            isDark,
-            isCookiesAllowed,
-            cookiePreferences,
-            hasCookiePreference,
-            isCookiePreferenceLoaded,
-            isCookiePreferenceEditorOpen,
-            openCookiePreferences,
-            setCookiePreference,
-            toggleTheme,
-            currentYear,
-            systemMessage,
-            setSystemMessage,
-            reportBug
-          }}
-      >
-        {children}
-      </AppContext.Provider>
+    <AppContext.Provider
+      value={{
+        appName: defaultContext.appName,
+        beVersion,
+        isDark,
+        isCookiesAllowed,
+        cookiePreferences,
+        hasCookiePreference,
+        isCookiePreferenceLoaded,
+        isCookiePreferenceEditorOpen,
+        openCookiePreferences,
+        setCookiePreference,
+        toggleTheme,
+        currentYear,
+        systemMessage,
+        setSystemMessage,
+        reportBug,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
   );
-};
+}

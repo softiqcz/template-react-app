@@ -9,10 +9,12 @@ import {
   SunIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { ReportBugDialog } from "@/components/layout/ReportBugDialog";
 import { Switch } from "@/components/ui/switch";
 import { useAppContext } from "@/context/AppContext";
 
@@ -22,16 +24,14 @@ const navItems = [
   { label: "Docs", href: "#docs" },
 ];
 
+const logoSource ="/images/logos/logo.png";
+
 export function Navbar() {
   const { appName, isDark, openCookiePreferences, toggleTheme } =
     useAppContext();
   const [isOpen, setIsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const settingsRowClass =
-    "grid w-full grid-cols-[1rem_1fr] items-center justify-start gap-2 px-3";
-  const themeRowClass =
-    "grid w-full grid-cols-[1rem_1fr_auto] items-center justify-start gap-2 px-3";
-  const settingsIconClass = "size-4 justify-self-center";
+  const [isBugReportOpen, setIsBugReportOpen] = useState(false);
 
   useEffect(() => {
     if (!isOpen) {
@@ -57,6 +57,12 @@ export function Navbar() {
     closeMenu();
   }
 
+  function handleBugReportOpen() {
+    setIsBugReportOpen(true);
+    setIsSettingsOpen(false);
+    setIsOpen(false);
+  }
+
   function renderMenuContent(switchId: string, isMobile: boolean) {
     return (
       <>
@@ -71,7 +77,7 @@ export function Navbar() {
             <Button
               key={item.href}
               asChild
-              className={isMobile ? "w-full justify-start" : undefined}
+
               size="sm"
               variant="ghost"
             >
@@ -82,13 +88,21 @@ export function Navbar() {
           ))}
         </div>
 
-        <Button asChild className={isMobile ? "w-full" : undefined} size="sm">
+        <Button
+          asChild
+          className={isMobile ? "navbar-mobile-menu-control" : undefined}
+          size="sm"
+        >
           <a href="https://softiq.cz" rel="noreferrer" target="_blank">
             softIQ
           </a>
         </Button>
 
-        <div className="relative">
+        <div
+          className={
+            isMobile ? "relative navbar-mobile-menu-control" : "relative"
+          }
+        >
           <Button
             aria-expanded={isSettingsOpen}
             className={isMobile ? "w-full gap-2" : "gap-2"}
@@ -111,15 +125,21 @@ export function Navbar() {
             <div className="ui-card mt-2 w-full md:absolute md:right-0 md:w-72">
               <div className="ui-card-content flex flex-col gap-2 pt-6">
                 <label
-                  className={`${themeRowClass} ui-button ui-button-ghost cursor-pointer py-2 text-left`}
+                  className="ui-button ui-button-ghost navbar-settings-menu-row cursor-pointer"
                   htmlFor={switchId}
                 >
                   {isDark ? (
-                    <SunIcon className={settingsIconClass} aria-hidden="true" />
+                    <SunIcon
+                      className="navbar-settings-icon"
+                      aria-hidden="true"
+                    />
                   ) : (
-                    <MoonIcon className={settingsIconClass} aria-hidden="true" />
+                    <MoonIcon
+                      className="navbar-settings-icon"
+                      aria-hidden="true"
+                    />
                   )}
-                  <span className="text-sm font-medium text-foreground">
+                  <span className="navbar-settings-text text-foreground">
                     {isDark ? "Tmavý" : "Světlý"} režim
                   </span>
                   <span className="relative flex items-center justify-self-end">
@@ -148,28 +168,29 @@ export function Navbar() {
                 </label>
 
                 <Button
-                  className={settingsRowClass}
+                  className="navbar-settings-menu-row"
                   type="button"
                   variant="ghost"
                   onClick={handleCookiePreferenceEdit}
                 >
                   <Cog6ToothIcon
-                    className={settingsIconClass}
+                    className="navbar-settings-icon"
                     aria-hidden="true"
                   />
-                  <span className="justify-self-start">Nastavení cookies</span>
+                  <span className="navbar-settings-text">Nastavení cookies</span>
                 </Button>
 
                 <Button
-                  className={settingsRowClass}
+                  className="navbar-settings-menu-row"
                   type="button"
                   variant="ghost"
+                  onClick={handleBugReportOpen}
                 >
                   <BugAntIcon
-                    className={settingsIconClass}
+                    className="navbar-settings-icon"
                     aria-hidden="true"
                   />
-                  <span className="justify-self-start">Report a bug</span>
+                  <span className="navbar-settings-text">Nahlásit chybu</span>
                 </Button>
               </div>
             </div>
@@ -180,57 +201,76 @@ export function Navbar() {
   }
 
   return (
-    <header
-      className={
-        isOpen
-          ? "fixed inset-0 z-50 flex flex-col overflow-hidden bg-background"
-          : "sticky top-0 z-50 bg-background/95 backdrop-blur"
-      }
-    >
-      <div className="border-b">
-        <nav
-          className="site-container flex items-center gap-3 py-4"
-          aria-label="Main navigation"
-        >
-          <Link
-            className="min-w-0 flex-1 whitespace-normal break-words text-base font-semibold leading-tight text-foreground underline-offset-4 hover:underline md:text-lg"
-            href="/"
-            onClick={closeMenu}
+    <>
+      <header
+        className={
+          isOpen
+            ? "fixed inset-0 z-50 flex flex-col overflow-hidden bg-background"
+            : "sticky top-0 z-50 bg-background/95 backdrop-blur"
+        }
+      >
+        <div className="border-b">
+          <nav
+            className="site-container flex items-center gap-3 py-4"
+            aria-label="Main navigation"
           >
-            {appName}
-          </Link>
+            <Link
+              className="flex min-w-0 flex-1 items-center gap-3 text-foreground "
+              href="/"
+              onClick={closeMenu}
+            >
+              {logoSource ? (
+                <Image
+                  src={logoSource}
+                  alt=""
+                  width={90}
+                  height={32}
+                  className="h-8 w-auto max-w-28 shrink-0 object-contain rounded-md"
+                  aria-hidden="true"
+                />
+              ) : null}
+              <span className="min-w-0 whitespace-normal break-words text-base font-semibold leading-tight md:text-lg">
+                {appName}
+              </span>
+            </Link>
 
-          <div className="hidden items-center gap-3 md:flex">
-            {renderMenuContent("navbar-theme-switch-desktop", false)}
-          </div>
+            <div className="hidden items-center gap-3 md:flex">
+              {renderMenuContent("navbar-theme-switch-desktop", false)}
+            </div>
 
-          <Button
-            aria-controls="site-navbar-mobile-menu"
-            aria-expanded={isOpen}
-            aria-label="Toggle navigation menu"
-            className="ml-auto shrink-0 md:hidden"
-            size="icon"
-            variant="outline"
-            type="button"
-            onClick={toggleMenu}
-          >
-            {isOpen ? (
-              <XMarkIcon className="size-4" aria-hidden="true" />
-            ) : (
-              <Bars3Icon className="size-4" aria-hidden="true" />
-            )}
-          </Button>
-        </nav>
-      </div>
-
-      {isOpen ? (
-        <div
-          id="site-navbar-mobile-menu"
-          className="site-container flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto py-4 md:hidden"
-        >
-          {renderMenuContent("navbar-theme-switch-mobile", true)}
+            <Button
+              aria-controls="site-navbar-mobile-menu"
+              aria-expanded={isOpen}
+              aria-label="Toggle navigation menu"
+              className="ml-auto shrink-0 md:hidden"
+              size="icon"
+              variant="outline"
+              type="button"
+              onClick={toggleMenu}
+            >
+              {isOpen ? (
+                <XMarkIcon className="size-4" aria-hidden="true" />
+              ) : (
+                <Bars3Icon className="size-4" aria-hidden="true" />
+              )}
+            </Button>
+          </nav>
         </div>
-      ) : null}
-    </header>
+
+        {isOpen ? (
+          <div
+            id="site-navbar-mobile-menu"
+            className="site-container flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto py-4 md:hidden"
+          >
+            {renderMenuContent("navbar-theme-switch-mobile", true)}
+          </div>
+        ) : null}
+      </header>
+
+      <ReportBugDialog
+        isOpen={isBugReportOpen}
+        onOpenChange={setIsBugReportOpen}
+      />
+    </>
   );
 }
