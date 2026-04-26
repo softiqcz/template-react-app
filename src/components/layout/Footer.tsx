@@ -7,13 +7,13 @@ import {useAppContext} from "@/context/AppContext";
 
 export function Footer() {
     const {beVersion, isDark, toggleTheme, CURRENT_YEAR} = useAppContext();
-         const FE_VERSION = "v0.0.1"
+    const FE_VERSION = "v0.0.1"
 
     return (
         <footer className="border-t bg-background">
             <div
                 className="site-container flex flex-col gap-3 py-5 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-                <p className="font-medium">© {CURRENT_YEAR} softIQ | BE {beVersion} | FE {FE_VERSION} |
+                <p className="font-medium">© {CURRENT_YEAR} softIQ | BE {beVersion} | FE {FE_VERSION}
                 </p>
                 <div className="flex items-center gap-3">
                     <div className="relative flex items-center">

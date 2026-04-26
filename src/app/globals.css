@@ -22,7 +22,6 @@
     --radius: 0.5rem;
     color-scheme: light;
   }
-
   .dark {
     --background: 2 8 23;
     --foreground: 248 250 252;
@@ -41,6 +40,36 @@
     --ring: 203 213 225;
     color-scheme: dark;
   }
+  /*:root {*/
+  /*  --background: 255 255 255;*/
+  /*  --foreground: 2 8 23;*/
+  /*  --white: 255 255 255;*/
+  /*  --white-foreground: 2 8 23;*/
+  /*  --primary: 255 160 46;*/
+  /*  --primary-foreground: 15 23 42;*/
+  /*  --slate-light: 241 245 249;*/
+  /*  --slate-light-foreground: 15 23 42;*/
+  /*  --slate-muted: 100 116 139;*/
+  /*  --slate-border: 226 232 240;*/
+  /*  --ring: 2 8 23;*/
+  /*  --radius: 0.5rem;*/
+  /*  color-scheme: light;*/
+  /*}*/
+
+  /*.dark {*/
+  /*  --background: 2 8 23;*/
+  /*  --foreground: 248 250 252;*/
+  /*  --navy: 2 8 23;*/
+  /*  --navy-foreground: 248 250 252;*/
+  /*  --primary: 255 160 46;*/
+  /*  --primary-foreground: 248 250 252;*/
+  /*  --slate-dark: 30 41 59;*/
+  /*  --slate-dark-foreground: 248 250 252;*/
+  /*  --slate-muted: 148 163 184;*/
+  /*  --slate-border: 30 41 59;*/
+  /*  --ring: 203 213 225;*/
+  /*  color-scheme: dark;*/
+  /*}*/
 
   html {
     scroll-behavior: smooth;
@@ -67,6 +96,19 @@
 }
 
 @layer components {
+  /*TOASTER*/
+  [data-sonner-toast][data-type="success"] {
+    @apply !bg-green-800 !text-white !border-none;
+
+  }
+  [data-sonner-toast][data-type="error"] {
+    @apply !bg-red-800 !text-white !border-none;
+  }
+  [data-sonner-toast][data-type="info"] {
+    @apply !bg-primary-200 !text-white !border-none;
+  }
+
+
   .site-container {
     @apply mx-auto max-w-5xl px-6;
   }
