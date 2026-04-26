@@ -242,6 +242,37 @@
   /* ─────────────────────────────────────────────────────
      ReviewsSection — ticker + stage layout
      ───────────────────────────────────────────────────── */
+  .reviews-section {
+    @apply w-full bg-muted/40 py-8;
+  }
+  .reviews-header {
+    @apply mb-5 max-w-2xl;
+  }
+  .reviews-title {
+    @apply mt-2 text-2xl font-semibold tracking-tight text-foreground;
+  }
+
+  .reviews-eyebrow {
+    @apply text-sm font-semibold uppercase tracking-wide text-primary;
+  }
+
+  .reviews-description {
+    @apply mt-2 text-sm leading-6 text-muted-foreground;
+  }
+
+
+  .reviews-swiper .swiper-pagination {
+    @apply right-0 flex flex-col items-center justify-center;
+    --swiper-pagination-bullet-vertical-gap: 2px;
+  }
+
+  .reviews-swiper .swiper-pagination-bullet {
+    @apply h-1.5 w-1.5 rounded-full bg-foreground/30 opacity-100 transition-all duration-[600ms] m-0;
+  }
+
+  .reviews-swiper .swiper-pagination-bullet-active {
+    @apply h-8 w-2.5 bg-primary my-auto transition-all duration-[600ms];
+  }
 
   .reviews-section {
     @apply overflow-hidden;
@@ -256,7 +287,7 @@
   }
 
   .reviews-quote-wrap {
-    @apply relative py-6 pb-5 transition-all duration-[340ms] ease-in-out opacity-100 translate-y-0;
+    @apply relative py-6 pb-5 mx-5 transition-all duration-[340ms] ease-in-out opacity-100 translate-y-0;
   }
 
   .reviews-quote-wrap.reviews-quote-exit {
@@ -264,12 +295,12 @@
   }
 
   .reviews-quote-mark {
-    @apply absolute top-7 font-serif text-[5rem] leading-[0.55] text-secondary select-none pointer-events-none;
+    @apply absolute top-7 font-serif text-[5rem] leading-[0.55] text-primary select-none pointer-events-none;
     left: -0.35rem;
   }
 
   .reviews-quote-text {
-    @apply font-normal leading-[1.45] text-primary pl-8 pr-4 max-w-[76ch];
+    @apply font-normal leading-[1.45] text-foreground pl-8 pr-4 max-w-[76ch];
     font-size: clamp(1.25rem, 3vw, 1.75rem);
   }
 
@@ -290,26 +321,6 @@
     @apply text-[0.8125rem] text-primary tracking-[0.04em];
   }
 
-  .reviews-pips {
-    @apply flex gap-1.5 mt-6;
-  }
-
-  .reviews-pip {
-    @apply flex-1 h-[2px] border-none rounded-sm cursor-pointer p-0 transition-colors duration-[250ms] relative bg-primary/20;
-  }
-
-  .reviews-pip::before {
-    @apply content-[''] absolute inset-x-0;
-    inset-block: -6px;
-  }
-
-  .reviews-pip.reviews-pip-active {
-    @apply bg-primary;
-  }
-
-  .reviews-pip:hover:not(.reviews-pip-active) {
-    @apply bg-primary/40;
-  }
 
   .reviews-divider {
     @apply border-none m-0;
@@ -368,5 +379,14 @@
       animation: none !important;
       transform: none !important;
     }
+  }
+
+  .reviews-swiper {
+    @apply w-full;
+    height: 220px; /* adjust to taste — must be fixed for vertical Swiper */
+  }
+
+  .reviews-swiper .swiper-slide {
+    @apply h-auto;
   }
 }
