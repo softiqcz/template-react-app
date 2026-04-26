@@ -1,13 +1,14 @@
 "use client";
 
 import {
-  Bars3Icon,
-  BugAntIcon,
-  ChevronDownIcon,
-  Cog6ToothIcon,
-  MoonIcon,
-  SunIcon,
-  XMarkIcon,
+    ArrowTopRightOnSquareIcon,
+    Bars3Icon,
+    BugAntIcon,
+    ChevronDownIcon,
+    Cog6ToothIcon,
+    MoonIcon,
+    SunIcon,
+    XMarkIcon,LinkIcon
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,7 +25,7 @@ const navItems = [
   { label: "Docs", href: "#docs" },
 ];
 
-const logoSource ="/images/logos/logo.png";
+const logoSource = "/images/logos/logo.png";
 
 export function Navbar() {
   const { appName, isDark, openCookiePreferences, toggleTheme } =
@@ -77,26 +78,22 @@ export function Navbar() {
             <Button
               key={item.href}
               asChild
-
+              className={
+                isMobile ? "navbar-mobile-menu-control gap-2" : "gap-2"
+              }
               size="sm"
               variant="ghost"
             >
               <Link href={item.href} onClick={closeMenu}>
+                <LinkIcon
+                  className={"size-4 shrink-0"}
+                  aria-hidden="true"
+                />
                 {item.label}
               </Link>
             </Button>
           ))}
         </div>
-
-        <Button
-          asChild
-          className={isMobile ? "navbar-mobile-menu-control" : undefined}
-          size="sm"
-        >
-          <a href="https://softiq.cz" rel="noreferrer" target="_blank">
-            softIQ
-          </a>
-        </Button>
 
         <div
           className={
@@ -111,7 +108,10 @@ export function Navbar() {
             variant="ghost"
             onClick={() => setIsSettingsOpen((current) => !current)}
           >
-            <Cog6ToothIcon className="size-4" aria-hidden="true" />
+            <Cog6ToothIcon
+              className={"size-4 shrink-0"}
+              aria-hidden="true"
+            />
             Nastavení
             <ChevronDownIcon
               className={`size-4 transition-transform ${
@@ -196,6 +196,23 @@ export function Navbar() {
             </div>
           ) : null}
         </div>
+
+          <Button
+              asChild
+              className={
+                  isMobile ? "navbar-mobile-menu-control gap-2" : "gap-2"
+              }
+              size="sm"
+              variant="default"
+          >
+              <Link href="https://softiq.cz" rel="noreferrer" target="_blank">
+                  <ArrowTopRightOnSquareIcon
+                      className={"size-4 shrink-0"}
+                      aria-hidden="true"
+                  />
+                  softIQ
+              </Link>
+          </Button>
       </>
     );
   }
