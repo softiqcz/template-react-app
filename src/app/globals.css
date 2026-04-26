@@ -22,7 +22,8 @@
     --radius: 0.5rem;
     color-scheme: light;
   }
-  .dark {
+  html.dark,
+  html[data-theme="dark"] {
     --background: 2 8 23;
     --foreground: 248 250 252;
     --card: 2 8 23;

@@ -73,8 +73,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const preferences = getCookiePreferences();
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const colorMode = preferences?.colorMode ?? (prefersDark ? "dark" : "light");
-    const shouldUseDark = colorMode === "dark";
+    const shouldUseDark = preferences?.colorMode
+      ? preferences.colorMode === "dark"
+      : prefersDark;
 
     if (preferences) {
       setCookiePreferences(preferences);
@@ -83,6 +84,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
 
     document.documentElement.classList.toggle("dark", shouldUseDark);
+    document.documentElement.dataset.theme = shouldUseDark ? "dark" : "light";
     setIsDark(shouldUseDark);
     setIsCookiePreferenceLoaded(true);
   }, []);
@@ -90,22 +92,25 @@ export function AppProvider({ children }: { children: ReactNode }) {
   function toggleTheme() {
     const next = !isDark;
     const nextColorMode: ColorMode = next ? "dark" : "light";
+
+    document.documentElement.classList.toggle("dark", next);
+    document.documentElement.dataset.theme = next ? "dark" : "light";
+    setIsDark(next);
+
     const nextPreferences = {
       ...cookiePreferences,
       colorMode: nextColorMode,
     };
 
-    document.documentElement.classList.toggle("dark", next);
     saveCookiePreferences(nextPreferences);
     setCookiePreferences(nextPreferences);
-    setIsDark(next);
   }
 
   function setCookiePreference(preferences: CookiePreferences) {
     const nextPreferences = {
       ...preferences,
-      colorMode: cookiePreferences.colorMode,
       hasCookiePreference: true,
+      colorMode: preferences.colorMode ?? (isDark ? "dark" : "light"),
     };
 
     saveCookiePreferences(nextPreferences);
