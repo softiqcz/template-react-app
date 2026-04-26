@@ -1,4 +1,5 @@
 import "./globals.css";
+import { CookieBanner } from "@/components/layout/CookieBanner";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { AppProviders } from "@/providers/AppProviders";
@@ -25,6 +26,7 @@ export default function RootLayout({
             <Navbar />
             <div className="flex-1">{children}</div>
             <Footer />
+            <CookieBanner />
           </div>
         </AppProviders>
       </body>
