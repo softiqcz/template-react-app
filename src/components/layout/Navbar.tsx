@@ -6,7 +6,6 @@ import {
   ChevronDownIcon,
   Cog6ToothIcon,
   MoonIcon,
-  SlashIcon,
   SunIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
@@ -28,6 +27,11 @@ export function Navbar() {
     useAppContext();
   const [isOpen, setIsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const settingsRowClass =
+    "grid w-full grid-cols-[1rem_1fr] items-center justify-start gap-2 px-3";
+  const themeRowClass =
+    "grid w-full grid-cols-[1rem_1fr_auto] items-center justify-start gap-2 px-3";
+  const settingsIconClass = "size-4 justify-self-center";
 
   useEffect(() => {
     if (!isOpen) {
@@ -64,14 +68,17 @@ export function Navbar() {
           }
         >
           {navItems.map((item) => (
-            <Link
+            <Button
               key={item.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              href={item.href}
-              onClick={closeMenu}
+              asChild
+              className={isMobile ? "w-full justify-start" : undefined}
+              size="sm"
+              variant="ghost"
             >
-              {item.label}
-            </Link>
+              <Link href={item.href} onClick={closeMenu}>
+                {item.label}
+              </Link>
+            </Button>
           ))}
         </div>
 
@@ -90,10 +97,10 @@ export function Navbar() {
             variant="ghost"
             onClick={() => setIsSettingsOpen((current) => !current)}
           >
-            <Cog6ToothIcon className="h-4 w-4" aria-hidden="true" />
+            <Cog6ToothIcon className="size-4" aria-hidden="true" />
             Nastavení
             <ChevronDownIcon
-              className={`h-4 w-4 transition-transform ${
+              className={`size-4 transition-transform ${
                 isSettingsOpen ? "rotate-180" : ""
               }`}
               aria-hidden="true"
@@ -104,21 +111,18 @@ export function Navbar() {
             <div className="ui-card mt-2 w-full md:absolute md:right-0 md:w-72">
               <div className="ui-card-content flex flex-col gap-2 pt-6">
                 <label
-                  className="ui-button ui-button-ghost grid w-full cursor-pointer grid-cols-[1rem_1fr_auto] items-center gap-3 px-3 py-2 text-left"
+                  className={`${themeRowClass} ui-button ui-button-ghost cursor-pointer py-2 text-left`}
                   htmlFor={switchId}
                 >
-                  <span
-                    aria-hidden="true"
-                    className="relative h-4 w-4 text-muted-foreground"
-                  >
-                    <SunIcon className="absolute left-0 top-0 h-3 w-3" />
-                    <MoonIcon className="absolute bottom-0 right-0 h-3 w-3" />
-                    <SlashIcon className="absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2" />
-                  </span>
+                  {isDark ? (
+                    <SunIcon className={settingsIconClass} aria-hidden="true" />
+                  ) : (
+                    <MoonIcon className={settingsIconClass} aria-hidden="true" />
+                  )}
                   <span className="text-sm font-medium text-foreground">
                     {isDark ? "Tmavý" : "Světlý"} režim
                   </span>
-                  <span className="relative flex items-center">
+                  <span className="relative flex items-center justify-self-end">
                     <Switch
                       id={switchId}
                       aria-label="Přepnout tmavý režim"
@@ -129,13 +133,13 @@ export function Navbar() {
                       {isDark ? (
                         <span className="ml-auto">
                           <MoonIcon
-                            className="h-3.5 w-3.5 text-primary-foreground"
+                            className="size-4 text-primary-foreground"
                             aria-hidden="true"
                           />
                         </span>
                       ) : (
                         <SunIcon
-                          className="h-3.5 w-3.5 text-primary-foreground"
+                          className="size-4 text-primary-foreground"
                           aria-hidden="true"
                         />
                       )}
@@ -144,22 +148,28 @@ export function Navbar() {
                 </label>
 
                 <Button
-                  className="w-full justify-start gap-2"
+                  className={settingsRowClass}
                   type="button"
                   variant="ghost"
                   onClick={handleCookiePreferenceEdit}
                 >
-                  <Cog6ToothIcon className="h-4 w-4" aria-hidden="true" />
-                  Nastavení cookies
+                  <Cog6ToothIcon
+                    className={settingsIconClass}
+                    aria-hidden="true"
+                  />
+                  <span className="justify-self-start">Nastavení cookies</span>
                 </Button>
 
                 <Button
-                  className="w-full justify-start gap-2"
+                  className={settingsRowClass}
                   type="button"
                   variant="ghost"
                 >
-                  <BugAntIcon className="h-4 w-4" aria-hidden="true" />
-                  Report a bug
+                  <BugAntIcon
+                    className={settingsIconClass}
+                    aria-hidden="true"
+                  />
+                  <span className="justify-self-start">Report a bug</span>
                 </Button>
               </div>
             </div>
@@ -205,9 +215,9 @@ export function Navbar() {
             onClick={toggleMenu}
           >
             {isOpen ? (
-              <XMarkIcon className="h-4 w-4" aria-hidden="true" />
+              <XMarkIcon className="size-4" aria-hidden="true" />
             ) : (
-              <Bars3Icon className="h-4 w-4" aria-hidden="true" />
+              <Bars3Icon className="size-4" aria-hidden="true" />
             )}
           </Button>
         </nav>

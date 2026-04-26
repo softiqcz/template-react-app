@@ -1,5 +1,5 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
-import {getVersionFromBe} from "@/utils";
+import {getVersionFromBe, postFeatureProposal} from "@/utils";
 import {
   ColorMode,
   CookiePreferences,
@@ -7,6 +7,11 @@ import {
   getCookiePreferences,
   saveCookiePreferences,
 } from "@/utils/cookiePreferences";
+
+type SystemMessage = {
+  message: string;
+  status: "success" | "error";
+};
 
 type AppContextType = {
   appName: string;
@@ -21,6 +26,8 @@ type AppContextType = {
   openCookiePreferences: () => void;
   setCookiePreference: (preferences: CookiePreferences) => void;
   toggleTheme: () => void;
+  systemMessage: SystemMessage;
+  setSystemMessage: (message: SystemMessage) => void;
 };
 
 const defaultCookiePreferences = createCookiePreferences({
@@ -31,7 +38,7 @@ const defaultCookiePreferences = createCookiePreferences({
 });
 
 const defaultContext: AppContextType = {
-  appName: "Template React App",
+  appName: "Softiq React App",
   beVersion: "",
   currentYear: 2026,
   isDark: false,
@@ -43,6 +50,8 @@ const defaultContext: AppContextType = {
   openCookiePreferences: () => {},
   setCookiePreference: () => {},
   toggleTheme: () => {},
+  systemMessage: { message: "", status: "success" },
+  setSystemMessage:() => {},
 };
 
 export function useAppContext() {
@@ -54,6 +63,7 @@ const AppContext = createContext<AppContextType>(defaultContext);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [isDark, setIsDark] = useState(false);
   const [beVersion, setBeVersion] = useState(defaultContext.beVersion);
+  const [systemMessage, setSystemMessage] = useState(defaultContext.systemMessage);
   const [isCookiesAllowed, setIsCookiesAllowed] = useState(
     defaultContext.isCookiesAllowed,
   );
@@ -68,7 +78,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
   const [isCookiePreferenceEditorOpen, setIsCookiePreferenceEditorOpen] =
     useState(defaultContext.isCookiePreferenceEditorOpen);
-  const CURRENT_YEAR = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     const preferences = getCookiePreferences();
@@ -137,6 +147,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
     })();
   }, []);
 
+  async function reportBug() {
+  const payload = {"data": {"message": "get message from input"}}
+    try {
+  const response = await postFeatureProposal(payload);
+      setSystemMessage({ message: response.data.data.message, status: "success" });
+  } catch {
+      setSystemMessage({ message: "Něco se porouchalo, napište nám na podporu", status: "error" });
+  }
+}
   return (
       <AppContext.Provider
           value={{
@@ -151,7 +170,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
             openCookiePreferences,
             setCookiePreference,
             toggleTheme,
-            currentYear: CURRENT_YEAR,
+            currentYear,
+            systemMessage,
+            setSystemMessage,
+            reportBug
           }}
       >
         {children}

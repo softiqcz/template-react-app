@@ -129,7 +129,7 @@ export const apiRequest = async ({
 export const getVersionFromBe = () =>
     apiRequestNoAuth({ path: "/public/version", method: "GET", useToast:true, loadingMessage:"Načítá se aplikace..." });
 
-export const featureProposal = (payload: Record<string, any>) =>
+export const postFeatureProposal = (payload: Record<string, any>) =>
     apiRequestNoAuth({
         path: "/user/utils/support/request",
         method: "POST",
