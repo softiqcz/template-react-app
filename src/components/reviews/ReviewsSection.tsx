@@ -2,7 +2,7 @@
 
 import { useRef, useState} from "react";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Autoplay, Pagination, Mousewheel} from "swiper/modules";
+import {Autoplay, Pagination} from "swiper/modules";
 import type {Swiper as SwiperType} from "swiper";
 
 import {useLanguage} from "@/context/LanguageContext";
@@ -112,7 +112,7 @@ export function ReviewsSection() {
                 {/* ── Vertical swiper ── */}
                 <Swiper
                     className="reviews-swiper"
-                    modules={[Autoplay, Pagination, Mousewheel]}
+                    modules={[Autoplay, Pagination]}
                     direction="vertical"
                     loop
                     autoplay={{
@@ -121,7 +121,6 @@ export function ReviewsSection() {
                         pauseOnMouseEnter: true,
                     }}
                     pagination={{ clickable: true }}
-                    mousewheel={{forceToAxis: true}}
                     slidesPerView={1}
                     onSwiper={(swiper) => (swiperRef.current = swiper)}
                     onSlideChange={(swiper) => setCurrent(swiper.realIndex)}
