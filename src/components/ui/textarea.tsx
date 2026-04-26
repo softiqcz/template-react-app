@@ -7,11 +7,7 @@ const Textarea = React.forwardRef<
   React.ComponentProps<"textarea">
 >(({ className, ...props }, ref) => {
   return (
-    <textarea
-      className={cn("ui-textarea", className)}
-      ref={ref}
-      {...props}
-    />
+    <textarea className={cn("ui-textarea", className)} ref={ref} {...props} />
   );
 });
 Textarea.displayName = "Textarea";

@@ -4,43 +4,31 @@ import { cn } from "@/lib/utils";
 
 const Card = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
   ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn("ui-card", className)}
-      {...props}
-    />
+    <div ref={ref} className={cn("ui-card", className)} {...props} />
   ),
 );
 Card.displayName = "Card";
 
-const CardHeader = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("ui-card-header", className)} {...props} />
-  ),
-);
-CardHeader.displayName = "CardHeader";
-
-const CardTitle = React.forwardRef<
+const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div">
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("ui-card-title", className)}
-    {...props}
-  />
+  <div ref={ref} className={cn("ui-card-header", className)} {...props} />
 ));
+CardHeader.displayName = "CardHeader";
+
+const CardTitle = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn("ui-card-title", className)} {...props} />
+  ),
+);
 CardTitle.displayName = "CardTitle";
 
 const CardDescription = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div">
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("ui-card-description", className)}
-    {...props}
-  />
+  <div ref={ref} className={cn("ui-card-description", className)} {...props} />
 ));
 CardDescription.displayName = "CardDescription";
 
@@ -52,15 +40,12 @@ const CardContent = React.forwardRef<
 ));
 CardContent.displayName = "CardContent";
 
-const CardFooter = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn("ui-card-footer", className)}
-      {...props}
-    />
-  ),
-);
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("ui-card-footer", className)} {...props} />
+));
 CardFooter.displayName = "CardFooter";
 
 export {
