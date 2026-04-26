@@ -33,10 +33,9 @@ type AppContextType = {
 };
 
 const defaultCookiePreferences = createCookiePreferences({
-  analyticalCookies: false,
+  analyticalCookies: true,
   colorMode: "light",
-  hasCookiePreference: false,
-  technicalCookies: false,
+  technicalCookies: true,
 });
 
 const defaultContext: AppContextType = {
@@ -44,9 +43,9 @@ const defaultContext: AppContextType = {
   beVersion: "",
   currentYear: 2026,
   isDark: false,
-  isCookiesAllowed: false,
+  isCookiesAllowed: true,
   cookiePreferences: defaultCookiePreferences,
-  hasCookiePreference: false,
+  hasCookiePreference: true,
   isCookiePreferenceLoaded: false,
   isCookiePreferenceEditorOpen: false,
   openCookiePreferences: () => {},
@@ -89,12 +88,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const shouldUseDark = preferences?.colorMode
       ? preferences.colorMode === "dark"
       : prefersDark;
+    const nextPreferences =
+      preferences ??
+      createCookiePreferences({
+        analyticalCookies: true,
+        colorMode: shouldUseDark ? "dark" : "light",
+        technicalCookies: true,
+      });
 
-    if (preferences) {
-      setCookiePreferences(preferences);
-      setIsCookiesAllowed(preferences.isCookiesAllowed);
-      setHasCookiePreference(preferences.hasCookiePreference);
+    if (!preferences) {
+      saveCookiePreferences(nextPreferences);
     }
+
+    setCookiePreferences(nextPreferences);
+    setIsCookiesAllowed(nextPreferences.isCookiesAllowed);
+    setHasCookiePreference(nextPreferences.hasCookiePreference);
 
     document.documentElement.classList.toggle("dark", shouldUseDark);
     document.documentElement.dataset.theme = shouldUseDark ? "dark" : "light";
