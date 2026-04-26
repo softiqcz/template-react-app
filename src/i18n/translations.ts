@@ -103,6 +103,14 @@ const translationPairs = {
     submit: ["Send", "Odeslat"],
     title: ["Report a bug", "Nahlaste nám chybu"],
   },
+  reviews: {
+    description: [
+      "Five customer stories are selected at random each time the page opens.",
+      "Při každém otevření stránky se náhodně vybere pět zákaznických recenzí.",
+    ],
+    eyebrow: ["User reviews", "Uživatelské recenze"],
+    title: ["What users say", "Co říkají uživatelé"],
+  },
 } as const satisfies TranslationSource;
 
 function resolveTranslations<T extends TranslationSource>(

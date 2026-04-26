@@ -238,4 +238,135 @@
   .ui-checkbox-check {
     @apply block text-[12px] leading-none;
   }
+  /**REVIEWS**/
+  /* ─────────────────────────────────────────────────────
+     ReviewsSection — ticker + stage layout
+     ───────────────────────────────────────────────────── */
+
+  .reviews-section {
+    @apply overflow-hidden;
+  }
+
+  .reviews-header {
+    @apply mb-10;
+  }
+
+  .reviews-stage {
+    @apply mx-8 mt-10 mb-8 text-center;
+  }
+
+  .reviews-quote-wrap {
+    @apply relative py-6 pb-5 transition-all duration-[340ms] ease-in-out opacity-100 translate-y-0;
+  }
+
+  .reviews-quote-wrap.reviews-quote-exit {
+    @apply opacity-0 -translate-y-3.5 pointer-events-none;
+  }
+
+  .reviews-quote-mark {
+    @apply absolute top-7 font-serif text-[5rem] leading-[0.55] text-secondary select-none pointer-events-none;
+    left: -0.35rem;
+  }
+
+  .reviews-quote-text {
+    @apply font-normal leading-[1.45] text-primary pl-8 pr-4 max-w-[76ch];
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+  }
+
+  .reviews-meta {
+    @apply flex items-center gap-4 pl-8 mt-5;
+  }
+
+  .reviews-stars {
+    @apply flex gap-0.5;
+    color: #f0a500;
+  }
+
+  .reviews-star-icon {
+    @apply w-3.5 h-3.5;
+  }
+
+  .reviews-author-line {
+    @apply text-[0.8125rem] text-primary tracking-[0.04em];
+  }
+
+  .reviews-pips {
+    @apply flex gap-1.5 mt-6;
+  }
+
+  .reviews-pip {
+    @apply flex-1 h-[2px] border-none rounded-sm cursor-pointer p-0 transition-colors duration-[250ms] relative bg-primary/20;
+  }
+
+  .reviews-pip::before {
+    @apply content-[''] absolute inset-x-0;
+    inset-block: -6px;
+  }
+
+  .reviews-pip.reviews-pip-active {
+    @apply bg-primary;
+  }
+
+  .reviews-pip:hover:not(.reviews-pip-active) {
+    @apply bg-primary/40;
+  }
+
+  .reviews-divider {
+    @apply border-none m-0;
+    border-top: 0.5px solid var(--primary);
+  }
+
+  .reviews-ticker-viewport {
+    @apply overflow-hidden py-4 cursor-default;
+  }
+
+  .reviews-ticker-rail {
+    @apply flex will-change-transform;
+    white-space: nowrap;
+  }
+
+  .reviews-ticker-item {
+    @apply inline-flex items-start gap-3.5 px-8 bg-transparent border-none cursor-pointer transition-opacity h-auto min-h-0;
+    white-space: nowrap;
+  }
+
+  .reviews-ticker-item:hover {
+    @apply opacity-55;
+  }
+
+  .reviews-ticker-name {
+    @apply text-xs font-medium tracking-widest uppercase text-primary flex-shrink-0;
+  }
+
+  .reviews-ticker-dot {
+    @apply w-[3px] h-[3px] rounded-full bg-secondary flex-shrink-0 mt-2;
+  }
+
+  .reviews-ticker-snippet {
+    @apply text-[0.9375rem] text-secondary font-normal max-w-[340px] whitespace-normal text-left;
+  }
+
+  .reviews-links {
+    @apply flex gap-4 mt-6;
+  }
+
+  .reviews-link {
+    @apply text-xs uppercase tracking-[0.06em] text-secondary no-underline transition-colors pb-px;
+    border-bottom: 0.5px solid var(--secondary);
+  }
+
+  .reviews-link:hover {
+    @apply text-primary;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reviews-quote-wrap {
+      @apply transition-opacity duration-[340ms] ease-in-out;
+    }
+
+    .reviews-ticker-rail {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
 }

@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,6 +23,7 @@ export default function Home() {
   const copy = t.home;
 
   return (
+    <>
       <main className="mx-auto grid min-h-[calc(100vh-142px)] max-w-5xl gap-10 px-6 py-16 lg:grid-cols-2 lg:items-center">
         <section>
         <div className="flex flex-wrap gap-3">
@@ -80,5 +82,7 @@ export default function Home() {
         </CardContent>
       </Card>
     </main>
+    <ReviewsSection />
+    </>
   );
 }

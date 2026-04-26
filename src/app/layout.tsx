@@ -1,4 +1,6 @@
 import "./globals.css";
+import "swiper/css";
+import "swiper/css/pagination";
 import { CookieBanner } from "@/components/layout/CookieBanner";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
