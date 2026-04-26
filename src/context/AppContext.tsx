@@ -28,6 +28,7 @@ type AppContextType = {
   toggleTheme: () => void;
   systemMessage: SystemMessage;
   setSystemMessage: (message: SystemMessage) => void;
+  reportBug: () => void;
 };
 
 const defaultCookiePreferences = createCookiePreferences({
@@ -52,6 +53,7 @@ const defaultContext: AppContextType = {
   toggleTheme: () => {},
   systemMessage: { message: "", status: "success" },
   setSystemMessage:() => {},
+  reportBug: () => {},
 };
 
 export function useAppContext() {
