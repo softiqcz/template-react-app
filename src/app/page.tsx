@@ -26,63 +26,63 @@ export default function Home() {
     <>
       <main className="ui-full-page">
         <section>
-        <div className="flex flex-wrap gap-3">
-          <Badge variant="secondary" className="gap-1.5">
-            <SparklesIcon className="size-3" aria-hidden="true" />
-            Next.js
-          </Badge>
-          <Badge variant="secondary" className="gap-1.5">
-            <SparklesIcon className="size-3" aria-hidden="true" />
-            Tailwind CSS
-          </Badge>
-          <Badge variant="secondary" className="gap-1.5">
-            <SparklesIcon className="size-3" aria-hidden="true" />
-            ShadcnUI
-          </Badge>
-          <Badge variant="secondary" className="gap-1.5">
-            <SparklesIcon className="size-3" aria-hidden="true" />
-            HeroIcons
-          </Badge>
-        </div>
-        <h1 className="ui-title">
-          {home.title}
-        </h1>
-        <p className="ui-subtitle">
-          {home.subtitle}
-        </p>
-        <div className="ui-below-subtitle-action">
-          <Button className="gap-2">
-            {home.primaryAction}
-            <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
-          </Button>
-          <Button variant="outline">{home.secondaryAction}</Button>
-        </div>
-      </section>
+          <div className="flex flex-wrap gap-3">
+            <Badge variant="secondary" className="gap-1.5">
+              <SparklesIcon className="size-3" aria-hidden="true" />
+              Next.js
+            </Badge>
+            <Badge variant="secondary" className="gap-1.5">
+              <SparklesIcon className="size-3" aria-hidden="true" />
+              Tailwind CSS
+            </Badge>
+            <Badge variant="secondary" className="gap-1.5">
+              <SparklesIcon className="size-3" aria-hidden="true" />
+              ShadcnUI
+            </Badge>
+            <Badge variant="secondary" className="gap-1.5">
+              <SparklesIcon className="size-3" aria-hidden="true" />
+              HeroIcons
+            </Badge>
+          </div>
+          <h1 className="ui-title">{home.title}</h1>
+          <p className="ui-subtitle">{home.subtitle}</p>
+          <div className="ui-below-subtitle-action">
+            <Button className="gap-2">
+              {home.primaryAction}
+              <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
+            </Button>
+            <Button variant="outline">{home.secondaryAction}</Button>
+          </div>
+        </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>{home.form.title}</CardTitle>
-          <CardDescription>
-            {home.form.description}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="project-name">{home.form.nameLabel}</Label>
-            <Input id="project-name" placeholder={home.form.namePlaceholder} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="project-notes">{home.form.notesLabel}</Label>
-            <Textarea id="project-notes" placeholder={home.form.notesPlaceholder} />
-          </div>
-          <div className="flex items-center gap-2">
-            <Checkbox id="template-ready" />
-            <Label htmlFor="template-ready">{home.form.readyLabel}</Label>
-          </div>
-        </CardContent>
-      </Card>
-    </main>
-    <ReviewsSection />
+        <Card>
+          <CardHeader>
+            <CardTitle>{home.form.title}</CardTitle>
+            <CardDescription>{home.form.description}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="project-name">{home.form.nameLabel}</Label>
+              <Input
+                id="project-name"
+                placeholder={home.form.namePlaceholder}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="project-notes">{home.form.notesLabel}</Label>
+              <Textarea
+                id="project-notes"
+                placeholder={home.form.notesPlaceholder}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Checkbox id="template-ready" />
+              <Label htmlFor="template-ready">{home.form.readyLabel}</Label>
+            </div>
+          </CardContent>
+        </Card>
+      </main>
+      <ReviewsSection />
     </>
   );
 }

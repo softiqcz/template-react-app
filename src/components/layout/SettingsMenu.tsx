@@ -70,7 +70,7 @@ export function SettingsMenu({
           onClick={() => setIsSettingsOpen((current) => !current)}
         >
           <Cog6ToothIcon className="size-4 shrink-0" aria-hidden="true" />
-          {menuPosition === "bottom" && (navbar.settings)}
+          {menuPosition === "bottom" && navbar.settings}
 
           <ChevronDownIcon
             className={`size-4 transition-transform ${

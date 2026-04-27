@@ -20,19 +20,15 @@ export default function NotFound() {
   return (
     <main className="ui-full-page">
       <section>
-          <Badge variant="secondary" className="gap-1.5">
-            <LinkSlashIcon className="size-3" aria-hidden="true" />
-            {notFound.eyebrow}
-          </Badge>
+        <Badge variant="secondary" className="gap-1.5">
+          <LinkSlashIcon className="size-3" aria-hidden="true" />
+          {notFound.eyebrow}
+        </Badge>
 
-        <h1 className="ui-title">
-          {notFound.title}
-        </h1>
+        <h1 className="ui-title">{notFound.title}</h1>
         <p className="ui-subtitle">{notFound.description}</p>
 
-        <div
-          className="ui-below-subtitle-action"
-        >
+        <div className="ui-below-subtitle-action">
           <Button asChild className="gap-2">
             <Link href="/">
               <HomeIcon className="size-4" aria-hidden="true" />

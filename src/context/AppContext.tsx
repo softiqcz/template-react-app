@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 import { getVersionFromBe, postFeatureProposal } from "@/utils";
 import {
@@ -67,7 +73,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const { t } = useLanguage();
   const [isDark, setIsDark] = useState(false);
   const [beVersion, setBeVersion] = useState(defaultContext.beVersion);
-  const [systemMessage, setSystemMessage] = useState(defaultContext.systemMessage);
+  const [systemMessage, setSystemMessage] = useState(
+    defaultContext.systemMessage,
+  );
   const [isCookiesAllowed, setIsCookiesAllowed] = useState(
     defaultContext.isCookiesAllowed,
   );
@@ -86,7 +94,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const preferences = getCookiePreferences();
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
     const shouldUseDark = preferences?.colorMode
       ? preferences.colorMode === "dark"
       : prefersDark;

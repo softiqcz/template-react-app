@@ -81,16 +81,16 @@ export function CookieBanner() {
                 {copy.message}
               </p>
               <Button
-                  aria-expanded={isDetailsOpen}
-                  className="inline-flex items-center gap-1 text-sm font-medium text-foreground shrink-0"
-                  type="button"
-                  variant="ghost"
-                  onClick={() => setIsDetailsOpen((current) => !current)}
+                aria-expanded={isDetailsOpen}
+                className="inline-flex items-center gap-1 text-sm font-medium text-foreground shrink-0"
+                type="button"
+                variant="ghost"
+                onClick={() => setIsDetailsOpen((current) => !current)}
               >
                 {copy.more}
                 <ChevronDownIcon
-                    aria-hidden="true"
-                    className={`h-4 w-4 transition-transform ${isDetailsOpen ? "rotate-180" : ""}`}
+                  aria-hidden="true"
+                  className={`h-4 w-4 transition-transform ${isDetailsOpen ? "rotate-180" : ""}`}
                 />
               </Button>
               <Button type="button" variant="outline" onClick={rejectCookies}>

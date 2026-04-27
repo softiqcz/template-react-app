@@ -255,15 +255,14 @@
     @apply mt-8 flex flex-wrap gap-3;
   }
 
-  /* ─────────────────────────────────────────────────────
-     ReviewsSection — ticker + stage layout
-     ───────────────────────────────────────────────────── */
   .reviews-section {
-    @apply w-full bg-muted/40 py-8;
+    @apply w-full overflow-hidden bg-muted/40 py-8;
   }
+
   .reviews-header {
-    @apply mb-5 max-w-2xl;
+    @apply mb-10 max-w-2xl;
   }
+
   .reviews-title {
     @apply mt-2 text-2xl font-semibold tracking-tight text-foreground;
   }
@@ -289,14 +288,6 @@
     @apply h-8 w-2.5 bg-primary my-auto transition-all duration-[600ms];
   }
 
-  .reviews-section {
-    @apply overflow-hidden;
-  }
-
-  .reviews-header {
-    @apply mb-10;
-  }
-
   .reviews-stage {
     @apply mx-8 mt-10 mb-8 text-center;
   }
@@ -305,18 +296,9 @@
     @apply relative py-6 pb-5 mx-56 transition-all duration-[340ms] ease-in-out opacity-100 translate-y-0;
   }
 
-  .reviews-quote-wrap.reviews-quote-exit {
-    @apply opacity-0 -translate-y-3.5 pointer-events-none;
-  }
-
   .reviews-quote-mark {
     @apply absolute top-7 font-serif text-[5rem] leading-[0.55] text-primary select-none pointer-events-none;
     left: -0.35rem;
-  }
-
-  .reviews-quote-text {
-    @apply font-normal leading-[1.45] text-foreground pl-8 pr-4 max-w-[76ch];
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
   }
 
   .reviews-meta {
@@ -336,62 +318,9 @@
     @apply text-[0.8125rem] text-primary tracking-[0.04em];
   }
 
-  .reviews-divider {
-    @apply border-none m-0;
-    border-top: 0.5px solid var(--primary);
-  }
-
-  .reviews-ticker-viewport {
-    @apply overflow-hidden py-4 cursor-default;
-  }
-
-  .reviews-ticker-rail {
-    @apply flex will-change-transform;
-    white-space: nowrap;
-  }
-
-  .reviews-ticker-item {
-    @apply inline-flex items-start gap-3.5 px-8 bg-transparent border-none cursor-pointer transition-opacity h-auto min-h-0;
-    white-space: nowrap;
-  }
-
-  .reviews-ticker-item:hover {
-    @apply opacity-55;
-  }
-
-  .reviews-ticker-name {
-    @apply text-xs font-medium tracking-widest uppercase text-primary flex-shrink-0;
-  }
-
-  .reviews-ticker-dot {
-    @apply w-[3px] h-[3px] rounded-full bg-secondary flex-shrink-0 mt-2;
-  }
-
-  .reviews-ticker-snippet {
-    @apply text-[0.9375rem] text-secondary font-normal max-w-[340px] whitespace-normal text-left;
-  }
-
-  .reviews-links {
-    @apply flex gap-4 mt-6;
-  }
-
-  .reviews-link {
-    @apply text-xs uppercase tracking-[0.06em] text-secondary no-underline transition-colors pb-px;
-    border-bottom: 0.5px solid var(--secondary);
-  }
-
-  .reviews-link:hover {
-    @apply text-primary;
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .reviews-quote-wrap {
       @apply transition-opacity duration-[340ms] ease-in-out;
-    }
-
-    .reviews-ticker-rail {
-      animation: none !important;
-      transform: none !important;
     }
   }
 

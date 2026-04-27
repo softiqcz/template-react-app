@@ -61,9 +61,7 @@ export function ReportBugDialog({
               <MyDialogHeader>
                 <MyDialogHeaderText>
                   <MyDialogTitle>{copy.title}</MyDialogTitle>
-                  <MyDialogDescription>
-                    {copy.description}
-                  </MyDialogDescription>
+                  <MyDialogDescription>{copy.description}</MyDialogDescription>
                 </MyDialogHeaderText>
                 <MyDialogCloseButton
                   aria-label={copy.close}
