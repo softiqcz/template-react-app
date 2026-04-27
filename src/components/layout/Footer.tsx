@@ -26,10 +26,12 @@ export function Footer() {
   const FE_VERSION = "v0.0.1";
 
   return (
-    <footer className="relative border-t bg-background">
-      <div className="site-container py-10 text-sm text-muted-foreground">
-        <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(16rem,auto)] md:items-start">
-          <section className="max-w-2xl space-y-3">
+    <footer className="border-t bg-background">
+      <div className="px-6 py-10 text-sm text-muted-foreground lg:px-10">
+        <div className="grid gap-10 md:grid-cols-4 md:items-start">
+          <div aria-hidden="true" className="hidden md:block" />
+
+          <section className="space-y-3">
             <p className="text-xs font-medium uppercase tracking-wide text-primary">
               Kontakt & info
             </p>
@@ -47,14 +49,11 @@ export function Footer() {
             </dl>
           </section>
 
-          <section className="flex flex-col gap-5 md:items-end md:pt-9">
+          <section className="flex flex-col gap-5 md:items-end md:text-right">
             <p className="text-xs font-medium uppercase tracking-wide text-primary">
               Dokumenty
             </p>
-            <nav
-              aria-label="Footer navigation"
-              className="flex flex-col gap-3 md:items-end"
-            >
+            <nav aria-label="Footer navigation" className="flex flex-col gap-3">
               {footerLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -67,7 +66,11 @@ export function Footer() {
                 </Link>
               ))}
             </nav>
-            <div className="space-y-1 border-t pt-4 text-xs font-medium md:text-right">
+          </section>
+
+          <section className="flex flex-col items-start gap-4 md:items-end md:text-right">
+            <SettingsMenu switchId="footer-theme-switch" menuPosition="top" />
+            <div className="space-y-1 text-xs font-medium">
               <p>
                 © {currentYear}{" "}
                 <Link
@@ -85,9 +88,6 @@ export function Footer() {
             </div>
           </section>
         </div>
-      </div>
-      <div className="absolute top-3 right-3">
-        <SettingsMenu switchId="footer-theme-switch" menuPosition="top" />
       </div>
     </footer>
   );
