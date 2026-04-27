@@ -91,6 +91,17 @@ const translationPairs = {
     },
     toggleMenu: ["Toggle navigation menu", "Přepnout navigační menu"],
   },
+  notFound: {
+    actionsLabel: ["404 actions", "Akce pro stránku 404"],
+    back: ["Go back", "Zpět"],
+    description: [
+      "Nothing lives on this route :(",
+      "Na této stránce opravdu nic nemáme :(",
+    ],
+    eyebrow: ["Error 404", "Chyba 404"],
+    home: ["Home", "Domů"],
+    title: ["There is nothing here.", "Tady nic není."],
+  },
   reportBug: {
     cancel: ["Cancel", "Zrušit"],
     close: ["Close bug report", "Zavřít hlášení chyby"],

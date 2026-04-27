@@ -3,24 +3,17 @@
 import {
   ArrowTopRightOnSquareIcon,
   Bars3Icon,
-  BugAntIcon,
-  ChevronDownIcon,
-  Cog6ToothIcon, FlagIcon,
   LinkIcon,
-  MoonIcon,
-  SunIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { SettingsMenu } from "@/components/layout/SettingsMenu";
 import { Button } from "@/components/ui/button";
-import { ReportBugDialog } from "@/components/layout/ReportBugDialog";
-import { Switch } from "@/components/ui/switch";
 import { useAppContext } from "@/context/AppContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { languages } from "@/i18n/translations";
 
 const navItems = [
   { labelKey: "home", href: "/" },
@@ -38,13 +31,10 @@ const externalLinks = [
 const logoSource = "/images/logos/logo.png";
 
 export function Navbar() {
-  const { appName, isDark, openCookiePreferences, toggleTheme } =
-    useAppContext();
-  const { language, setLanguage, t } = useLanguage();
-  const copy = t.navbar;
+  const { appName } = useAppContext();
+  const { t } = useLanguage();
+  const navbar = t.navbar;
   const [isOpen, setIsOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isBugReportOpen, setIsBugReportOpen] = useState(false);
 
   useEffect(() => {
     if (!isOpen) {
@@ -62,24 +52,9 @@ export function Navbar() {
   const toggleMenu = () => setIsOpen((current) => !current);
   const closeMenu = () => {
     setIsOpen(false);
-    setIsSettingsOpen(false);
   };
 
-  function handleCookiePreferenceEdit() {
-    openCookiePreferences();
-    closeMenu();
-  }
-
-  function handleBugReportOpen() {
-    setIsBugReportOpen(true);
-    setIsSettingsOpen(false);
-    setIsOpen(false);
-  }
-
   function renderMenuContent(switchId: string, isMobile: boolean) {
-    const languageSwitchId = `${switchId}-language`;
-    const currentLanguage = languages.find((item) => item.code === language);
-
     return (
       <>
         <div
@@ -100,146 +75,18 @@ export function Navbar() {
               variant="ghost"
             >
               <Link href={item.href} onClick={closeMenu}>
-                <LinkIcon
-                  className={"size-4 shrink-0"}
-                  aria-hidden="true"
-                />
-                {copy.navItems[item.labelKey]}
+                <LinkIcon className={"size-4 shrink-0"} aria-hidden="true" />
+                {navbar.navItems[item.labelKey]}
               </Link>
             </Button>
           ))}
         </div>
 
-        <div
-          className={
-            isMobile ? "relative navbar-mobile-menu-control" : "relative"
-          }
-        >
-          <Button
-            aria-expanded={isSettingsOpen}
-            className={isMobile ? "w-full gap-2" : "gap-2"}
-            size="sm"
-            type="button"
-            variant="ghost"
-            onClick={() => setIsSettingsOpen((current) => !current)}
-          >
-            <Cog6ToothIcon
-              className={"size-4 shrink-0"}
-              aria-hidden="true"
-            />
-            {copy.settings}
-            <ChevronDownIcon
-              className={`size-4 transition-transform ${
-                isSettingsOpen ? "rotate-180" : ""
-              }`}
-              aria-hidden="true"
-            />
-          </Button>
-
-          {isSettingsOpen ? (
-            <div className="ui-card mt-2 w-full md:absolute md:right-0 md:w-72">
-              <div className="ui-card-content flex flex-col gap-2 pt-6">
-                <label
-                  className="ui-button ui-button-ghost navbar-settings-menu-row cursor-pointer"
-                  htmlFor={switchId}
-                >
-                  {isDark ? (
-                    <SunIcon
-                      className="navbar-settings-icon"
-                      aria-hidden="true"
-                    />
-                  ) : (
-                    <MoonIcon
-                      className="navbar-settings-icon"
-                      aria-hidden="true"
-                    />
-                  )}
-                  <span className="navbar-settings-text text-foreground">
-                    {isDark ? copy.themeMode.dark : copy.themeMode.light}
-                  </span>
-                  <span className="relative flex items-center justify-self-end">
-                    <Switch
-                      id={switchId}
-                      aria-label={copy.themeMode.toggle}
-                      checked={isDark}
-                      onCheckedChange={toggleTheme}
-                    />
-                    <span className="pointer-events-none absolute left-0 flex h-full w-full items-center px-[3px]">
-                      {isDark ? (
-                        <span className="ml-auto">
-                          <MoonIcon
-                            className="size-4 text-primary-foreground"
-                            aria-hidden="true"
-                          />
-                        </span>
-                      ) : (
-                        <SunIcon
-                          className="size-4 text-primary-foreground"
-                          aria-hidden="true"
-                        />
-                      )}
-                    </span>
-                  </span>
-                </label>
-
-                <label
-                  className="ui-button ui-button-ghost navbar-settings-menu-row cursor-pointer"
-                  htmlFor={languageSwitchId}
-                >
-                 <FlagIcon className="size-4" />
-                  <span className="navbar-settings-text text-foreground">
-                    {copy.language}: {currentLanguage?.shortLabel}
-                  </span>
-                  <span className="relative flex items-center justify-self-end">
-                    <Switch
-                      id={languageSwitchId}
-                      aria-label={copy.language}
-                      checked={language === "en"}
-                      onCheckedChange={(checked) =>
-                        setLanguage(checked ? "en" : "cs")
-                      }
-                    />
-                    <span className="pointer-events-none absolute left-0 flex h-full w-full items-center px-[3px]">
-                      {language === "en" ? (
-                        <span className="ml-auto text-[10px] leading-none">
-                          🇬🇧
-                        </span>
-                      ) : (
-                        <span className="text-[10px] leading-none">🇨🇿</span>
-                      )}
-                    </span>
-                  </span>
-                </label>
-
-                <Button
-                  className="navbar-settings-menu-row"
-                  type="button"
-                  variant="ghost"
-                  onClick={handleCookiePreferenceEdit}
-                >
-                  <Cog6ToothIcon
-                    className="navbar-settings-icon"
-                    aria-hidden="true"
-                  />
-                  <span className="navbar-settings-text">{copy.cookies}</span>
-                </Button>
-
-                <Button
-                  className="navbar-settings-menu-row"
-                  type="button"
-                  variant="ghost"
-                  onClick={handleBugReportOpen}
-                >
-                  <BugAntIcon
-                    className="navbar-settings-icon"
-                    aria-hidden="true"
-                  />
-                  <span className="navbar-settings-text">{copy.bugReport}</span>
-                </Button>
-              </div>
-            </div>
-          ) : null}
-        </div>
+        <SettingsMenu
+          switchId={switchId}
+          isMobile={isMobile}
+          onAfterAction={closeMenu}
+        />
 
         {externalLinks.map((item) => (
           <Button
@@ -303,7 +150,7 @@ export function Navbar() {
             <Button
               aria-controls="site-navbar-mobile-menu"
               aria-expanded={isOpen}
-              aria-label={copy.toggleMenu}
+              aria-label={navbar.toggleMenu}
               className="ml-auto shrink-0 md:hidden"
               size="icon"
               variant="outline"
@@ -328,11 +175,6 @@ export function Navbar() {
           </div>
         ) : null}
       </header>
-
-      <ReportBugDialog
-        isOpen={isBugReportOpen}
-        onOpenChange={setIsBugReportOpen}
-      />
     </>
   );
 }

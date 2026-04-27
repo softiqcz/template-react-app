@@ -20,7 +20,7 @@ import { useLanguage } from "@/context/LanguageContext";
 
 export default function Home() {
   const { t } = useLanguage();
-  const copy = t.home;
+  const home = t.home;
 
   return (
     <>
@@ -44,40 +44,40 @@ export default function Home() {
             HeroIcons
           </Badge>
         </div>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-foreground sm:text-6xl">
-          {copy.title}
+        <h1 className="ui-title">
+          {home.title}
         </h1>
-        <p className="mt-6 text-lg leading-8 text-muted-foreground">
-          {copy.subtitle}
+        <p className="ui-subtitle">
+          {home.subtitle}
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Button className="gap-2">
-            {copy.primaryAction}
+            {home.primaryAction}
             <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
           </Button>
-          <Button variant="outline">{copy.secondaryAction}</Button>
+          <Button variant="outline">{home.secondaryAction}</Button>
         </div>
       </section>
 
       <Card>
         <CardHeader>
-          <CardTitle>{copy.form.title}</CardTitle>
+          <CardTitle>{home.form.title}</CardTitle>
           <CardDescription>
-            {copy.form.description}
+            {home.form.description}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="project-name">{copy.form.nameLabel}</Label>
-            <Input id="project-name" placeholder={copy.form.namePlaceholder} />
+            <Label htmlFor="project-name">{home.form.nameLabel}</Label>
+            <Input id="project-name" placeholder={home.form.namePlaceholder} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="project-notes">{copy.form.notesLabel}</Label>
-            <Textarea id="project-notes" placeholder={copy.form.notesPlaceholder} />
+            <Label htmlFor="project-notes">{home.form.notesLabel}</Label>
+            <Textarea id="project-notes" placeholder={home.form.notesPlaceholder} />
           </div>
           <div className="flex items-center gap-2">
             <Checkbox id="template-ready" />
-            <Label htmlFor="template-ready">{copy.form.readyLabel}</Label>
+            <Label htmlFor="template-ready">{home.form.readyLabel}</Label>
           </div>
         </CardContent>
       </Card>

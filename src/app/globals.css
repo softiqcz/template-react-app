@@ -238,7 +238,19 @@
   .ui-checkbox-check {
     @apply block text-[12px] leading-none;
   }
-  /**REVIEWS**/
+
+  .ui-subtitle {
+    @apply mt-6 text-lg leading-8 text-muted-foreground;
+  }
+
+  .ui-title {
+    @apply mt-4 text-4xl font-semibold tracking-tight text-foreground sm:text-6xl;
+  }
+
+  .not-found-route {
+    @apply mt-8 inline-flex items-center gap-2 border-l-2 border-primary pl-4 text-sm font-medium text-foreground/70;
+  }
+
   /* ─────────────────────────────────────────────────────
      ReviewsSection — ticker + stage layout
      ───────────────────────────────────────────────────── */
@@ -259,7 +271,6 @@
   .reviews-description {
     @apply mt-2 text-sm leading-6 text-muted-foreground;
   }
-
 
   .reviews-swiper .swiper-pagination {
     @apply right-0 flex flex-col items-center justify-center;
@@ -287,7 +298,7 @@
   }
 
   .reviews-quote-wrap {
-    @apply relative py-6 pb-5 mx-5 transition-all duration-[340ms] ease-in-out opacity-100 translate-y-0;
+    @apply relative py-6 pb-5 mx-56 transition-all duration-[340ms] ease-in-out opacity-100 translate-y-0;
   }
 
   .reviews-quote-wrap.reviews-quote-exit {
@@ -320,7 +331,6 @@
   .reviews-author-line {
     @apply text-[0.8125rem] text-primary tracking-[0.04em];
   }
-
 
   .reviews-divider {
     @apply border-none m-0;
@@ -382,8 +392,8 @@
   }
 
   .reviews-swiper {
-    @apply w-full;
-    height: 220px; /* adjust to taste — must be fixed for vertical Swiper */
+    @apply max-w-3xl;
+    height: 220px;
   }
 
   .reviews-swiper .swiper-slide {
