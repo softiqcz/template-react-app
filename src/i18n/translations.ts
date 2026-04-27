@@ -98,7 +98,7 @@ const translationPairs = {
       "Nothing lives on this route :(",
       "Na této stránce opravdu nic nemáme :(",
     ],
-    eyebrow: ["Error 404", "Chyba 404"],
+    eyebrow: ["Page not found", "Stránka nenalezena"],
     home: ["Home", "Domů"],
     title: ["There is nothing here.", "Tady nic není."],
   },

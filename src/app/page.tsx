@@ -24,23 +24,23 @@ export default function Home() {
 
   return (
     <>
-      <main className="mx-auto grid min-h-[calc(100vh-142px)] max-w-5xl gap-10 px-6 py-16 lg:grid-cols-2 lg:items-center">
+      <main className="ui-full-page">
         <section>
         <div className="flex flex-wrap gap-3">
           <Badge variant="secondary" className="gap-1.5">
-            <SparklesIcon className="h-3.5 w-3.5" aria-hidden="true" />
+            <SparklesIcon className="size-3" aria-hidden="true" />
             Next.js
           </Badge>
           <Badge variant="secondary" className="gap-1.5">
-            <SparklesIcon className="h-3.5 w-3.5" aria-hidden="true" />
+            <SparklesIcon className="size-3" aria-hidden="true" />
             Tailwind CSS
           </Badge>
           <Badge variant="secondary" className="gap-1.5">
-            <SparklesIcon className="h-3.5 w-3.5" aria-hidden="true" />
+            <SparklesIcon className="size-3" aria-hidden="true" />
             ShadcnUI
           </Badge>
           <Badge variant="secondary" className="gap-1.5">
-            <SparklesIcon className="h-3.5 w-3.5" aria-hidden="true" />
+            <SparklesIcon className="size-3" aria-hidden="true" />
             HeroIcons
           </Badge>
         </div>
@@ -50,7 +50,7 @@ export default function Home() {
         <p className="ui-subtitle">
           {home.subtitle}
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="ui-below-subtitle-action">
           <Button className="gap-2">
             {home.primaryAction}
             <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
