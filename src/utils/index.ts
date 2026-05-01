@@ -9,8 +9,8 @@ type Method = "GET" | "POST" | "PUT" | "DELETE";
 interface RequestOptions {
   path: string;
   method: Method;
-  data?: Record<string, any>;
-  params?: Record<string, any>;
+  data?: Record<string, unknown>;
+  params?: Record<string, string | number | boolean>;
   token?: string;
   useToast?: boolean;
   loadingMessage?: string;
@@ -22,12 +22,15 @@ export const dismissToastLater = (toastId: string | number) => {
   setTimeout(() => toast.dismiss(toastId), 3000);
 };
 
-const buildURL = (path: string, params?: Record<string, any>) => {
+const buildURL = (
+  path: string,
+  params?: RequestOptions["params"],
+) => {
   const url = new URL(`${baseURL}${path}`);
   if (params) {
-    Object.entries(params).forEach(([key, value]) =>
-      url.searchParams.append(key, String(value)),
-    );
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined) url.searchParams.append(key, String(value));
+    });
   }
   return url.toString();
 };
@@ -41,13 +44,24 @@ const parseResponse = async (res: Response) => {
   }
 };
 
+const getResponseMessage = (data: unknown) =>
+  typeof data === "object" &&
+  data !== null &&
+  "message" in data &&
+  typeof data.message === "string"
+    ? data.message
+    : undefined;
+
+const getErrorMessage = (error: unknown) =>
+  error instanceof Error ? error.message : undefined;
+
 const showResponseToast = (
   status: number,
-  data: any,
+  data: unknown,
   toastId?: string | number,
   fallbackErrorMessage = DEFAULT_ERROR_MESSAGE,
 ) => {
-  const message = data?.message;
+  const message = getResponseMessage(data);
   if (status >= 200 && status < 300) {
     toast.success(message || "Hotovo");
   } else {
@@ -57,11 +71,11 @@ const showResponseToast = (
 };
 
 const showThrownErrorToast = (
-  error: any,
+  error: unknown,
   toastId?: string | number,
   fallbackErrorMessage = DEFAULT_ERROR_MESSAGE,
 ) => {
-  toast.error(error?.message || fallbackErrorMessage);
+  toast.error(getErrorMessage(error) || fallbackErrorMessage);
   if (toastId !== undefined) dismissToastLater(toastId);
 };
 
@@ -86,7 +100,7 @@ export const apiRequestNoAuth = async ({
     const { status, data: resData } = await parseResponse(res);
     if (useToast) showResponseToast(status, resData, toastId);
     return { status, data: resData };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(`API ${method} ${path} failed:`, error);
     if (useToast) showThrownErrorToast(error, toastId);
     throw error;
@@ -118,7 +132,7 @@ export const apiRequest = async ({
     const { status, data: resData } = await parseResponse(res);
     if (useToast) showResponseToast(status, resData, toastId);
     return { status, data: resData };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(`API ${method} ${path} failed:`, error);
     if (useToast) showThrownErrorToast(error, toastId);
     throw error;
@@ -134,7 +148,18 @@ export const getVersionFromBe = () =>
     loadingMessage: "Načítá se aplikace...",
   });
 
-export const postFeatureProposal = (payload: Record<string, any>) =>
+export const postContactMessage = (payload: NonNullable<RequestOptions["data"]>) =>
+  apiRequestNoAuth({
+    path: "/public/contact",
+    method: "POST",
+    data: payload,
+    useToast: true,
+    loadingMessage: "Odesílá se zpráva z konktaktního formuláře...",
+  });
+
+export const postFeatureProposal = (
+  payload: NonNullable<RequestOptions["data"]>,
+) =>
   apiRequestNoAuth({
     path: "/user/utils/support/request",
     method: "POST",

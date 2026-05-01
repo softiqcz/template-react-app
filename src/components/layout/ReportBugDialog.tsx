@@ -28,9 +28,9 @@ export function ReportBugDialog({
   isOpen,
   onOpenChange,
 }: ReportBugDialogProps) {
-  const { reportBug } = useAppContext();
+  const { reportBug: submitBugReport } = useAppContext();
   const { t } = useLanguage();
-  const copy = t.reportBug;
+  const reportBug = t.reportBug;
   const [message, setMessage] = useState("");
 
   function handleCancel() {
@@ -47,7 +47,7 @@ export function ReportBugDialog({
       return;
     }
 
-    await reportBug(trimmedMessage);
+    await submitBugReport(trimmedMessage);
     onOpenChange(false);
     setMessage("");
   }
@@ -60,18 +60,20 @@ export function ReportBugDialog({
             <MyDialogContent>
               <MyDialogHeader>
                 <MyDialogHeaderText>
-                  <MyDialogTitle>{copy.title}</MyDialogTitle>
-                  <MyDialogDescription>{copy.description}</MyDialogDescription>
+                  <MyDialogTitle>{reportBug.title}</MyDialogTitle>
+                  <MyDialogDescription>
+                    {reportBug.description}
+                  </MyDialogDescription>
                 </MyDialogHeaderText>
                 <MyDialogCloseButton
-                  aria-label={copy.close}
+                  aria-label={reportBug.close}
                   onClick={handleCancel}
                 />
               </MyDialogHeader>
 
               <Textarea
-                aria-label={copy.messageLabel}
-                placeholder={copy.placeholder}
+                aria-label={reportBug.messageLabel}
+                placeholder={reportBug.placeholder}
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
               />
@@ -79,10 +81,10 @@ export function ReportBugDialog({
 
             <MyDialogFooter>
               <Button type="button" variant="outline" onClick={handleCancel}>
-                {copy.cancel}
+                {reportBug.cancel}
               </Button>
               <Button type="submit" disabled={!message.trim()}>
-                {copy.submit}
+                {reportBug.submit}
               </Button>
             </MyDialogFooter>
           </form>

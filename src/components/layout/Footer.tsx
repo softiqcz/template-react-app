@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import {SettingsMenu} from "@/components/layout/SettingsMenu";
+import {SoftiqLogoLink} from "@/components/layout/SoftiqLogoLink";
 import {useAppContext} from "@/context/AppContext";
 
 const footerLinks = [
@@ -26,7 +27,7 @@ export function Footer() {
     const FE_VERSION = "v0.0.1";
 
     return (
-        <footer className="border-t bg-background">
+        <footer className="group/footer border-t bg-background">
             <div className="px-6 py-10 text-sm text-muted-foreground lg:px-10">
                 <div className="grid gap-10 md:grid-cols-4 md:items-start">
                     <div aria-hidden="true" className="hidden md:block"/>
@@ -72,22 +73,11 @@ export function Footer() {
 
                     <section className="flex flex-col items-start gap-4 md:items-end md:text-right">
                         <SettingsMenu switchId="footer-theme-switch" menuPosition="top"/>
-                        <div className="space-y-1 text-xs font-medium">
-                            <p>
-                                © {currentYear}{" "}
-                                <Link
-                                    className="text-foreground underline-offset-4 transition-all hover:text-primary hover:underline"
-                                    href="https://softiq.cz"
-                                    rel="noreferrer"
-                                    target="_blank"
-                                >
-                                    softIQ
-                                </Link>
-                            </p>
-                            <p>
-                                BE {beVersion} | FE {FE_VERSION}
-                            </p>
-                        </div>
+                        <SoftiqLogoLink
+                            beVersion={beVersion}
+                            currentYear={currentYear}
+                            feVersion={FE_VERSION}
+                        />
                     </section>
                 </div>
             </div>

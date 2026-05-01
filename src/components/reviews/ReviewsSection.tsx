@@ -1,10 +1,12 @@
 "use client";
 
 import { useRef } from "react";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 
+import { SectionHeader } from "@/components/SectionHeader";
 import { useLanguage } from "@/context/LanguageContext";
 
 import "swiper/css";
@@ -17,7 +19,7 @@ type Review = {
   };
 };
 
-const reviews: Review[] = [
+const reviewItems: Review[] = [
   {
     author: "Anna",
     text: {
@@ -92,20 +94,17 @@ function StarIcon({ className }: { className?: string }) {
 
 export function ReviewsSection() {
   const { language, t } = useLanguage();
-  const copy = t.reviews;
+  const reviews = t.reviews;
   const swiperRef = useRef<SwiperType | null>(null);
 
   return (
     <section className="reviews-section">
-      {copy?.title && (
-        <div className="site-container reviews-header">
-          {copy.eyebrow && <p className="reviews-eyebrow">{copy.eyebrow}</p>}
-          <h2 className="reviews-title">{copy.title}</h2>
-          {copy.description && (
-            <p className="reviews-description">{copy.description}</p>
-          )}
-        </div>
-      )}
+      <SectionHeader
+        eyebrow={reviews?.eyebrow}
+        title={reviews?.title}
+        description={reviews?.description}
+        className="reviews-header"
+      />
 
       <div className="reviews-stage">
         {/* ── Vertical swiper ── */}
@@ -123,7 +122,7 @@ export function ReviewsSection() {
           slidesPerView={1}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
         >
-          {reviews.map((review) => (
+          {reviewItems.map((review) => (
             <SwiperSlide key={review.author}>
               <div className="reviews-quote-wrap">
                 <span className="reviews-quote-mark" aria-hidden="true">
@@ -142,6 +141,16 @@ export function ReviewsSection() {
             </SwiperSlide>
           ))}
         </Swiper>
+
+        <a
+          className="reviews-all-link"
+          href="https://www.firmy.cz/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span>{reviews.moreLink}</span>
+          <ArrowTopRightOnSquareIcon aria-hidden="true" />
+        </a>
       </div>
     </section>
   );

@@ -5,11 +5,13 @@ import { CookieBanner } from "@/components/layout/CookieBanner";
 import { Footer } from "@/components/layout/Footer";
 import { InitialLoadingGate } from "@/components/layout/InitialLoadingGate";
 import { Navbar } from "@/components/layout/Navbar";
+import { SettingsMenuOffcanvas } from "@/components/layout/SettingsMenuOffcanvas";
 import { AppProviders } from "@/providers/AppProviders";
 
 export const metadata = {
   title: "Next.js Tailwind Template",
   description: "A clean Next.js and Tailwind CSS starter template.",
+  manifest: "/manifest.json",
 };
 
 export const viewport = {
@@ -31,6 +33,7 @@ export default function RootLayout({
               <div className="flex-1">{children}</div>
               <Footer />
               <CookieBanner />
+              <SettingsMenuOffcanvas />
             </div>
           </InitialLoadingGate>
         </AppProviders>

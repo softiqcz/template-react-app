@@ -28,7 +28,7 @@ const externalLinks = [
   },
 ];
 
-const logoSource = "/images/logos/logo.png";
+const logoSource = "/images/logos/softiq.svg"; //do not forget to change it in manifest.json
 
 export function Navbar() {
   const { appName } = useAppContext();
@@ -118,7 +118,7 @@ export function Navbar() {
             : "sticky top-0 z-50 bg-background/95 backdrop-blur"
         }
       >
-        <div className="border-b">
+        <div className="border-b border-primary">
           <nav
             className="site-container flex items-center gap-3 py-4"
             aria-label="Main navigation"

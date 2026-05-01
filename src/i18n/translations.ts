@@ -73,6 +73,25 @@ const translationPairs = {
       readyLabel: ["Ready to customize", "Připraveno k úpravám"],
       title: ["Starter Form", "Startovací formulář"],
     },
+    contact: {
+        description: [
+          "Leave a message, we are glad to help you.",
+          "Zanechte nám zprávu, rádi Vám poradíme.",
+        ],
+        eyebrow: ["Contact", "Kontakt"],
+      emailLabel: ["Email", "E-mail"],
+      emailPlaceholder: ["name@example.com", "jmeno@example.com"],
+      messageLabel: ["Message", "Zpráva"],
+      messagePlaceholder: [
+        "What can we help you with?",
+        "S čím vám můžeme pomoct?",
+      ],
+      nameLabel: ["Name", "Jméno"],
+      namePlaceholder: ["Your name", "Vaše jméno"],
+      submit: ["Send message", "Odeslat zprávu"],
+      submitting: ["Sending...", "Odesílá se..."],
+      title: ["Write to us", "Napište nám"],
+    },
   },
   navbar: {
     bugReport: ["Report a bug", "Nahlásit chybu"],
@@ -120,6 +139,10 @@ const translationPairs = {
       "Při každém otevření stránky se náhodně vybere pět zákaznických recenzí.",
     ],
     eyebrow: ["User reviews", "Uživatelské recenze"],
+    moreLink: [
+      "See all reviews or add yours",
+      "Zobrazit všechny recenze nebo přidat vlastní",
+    ],
     title: ["What users say", "Co říkají uživatelé"],
   },
 } as const satisfies TranslationSource;

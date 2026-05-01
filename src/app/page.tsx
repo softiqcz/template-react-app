@@ -2,6 +2,9 @@
 
 import { ArrowRightIcon, SparklesIcon } from "@heroicons/react/24/outline";
 
+import { ActionButton } from "@/components/ActionButton";
+import { ContactSection } from "@/components/contact/ContactSection";
+import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +15,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -79,9 +81,16 @@ export default function Home() {
               <Checkbox id="template-ready" />
               <Label htmlFor="template-ready">{home.form.readyLabel}</Label>
             </div>
+            <ActionButton
+              className="w-fit"
+              prompt={home.contact.submit}
+              isLoading
+              icon={<ArrowRightIcon className="h-4 w-4" />}
+            />
           </CardContent>
         </Card>
       </main>
+      <ContactSection />
       <ReviewsSection />
     </>
   );

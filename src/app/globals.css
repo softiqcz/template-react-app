@@ -126,6 +126,64 @@
     @apply h-9 w-9;
   }
 
+  .action-button {
+    @apply relative gap-2 overflow-hidden transition-all duration-[600ms];
+  }
+
+  .action-button-text {
+    @apply translate-y-0 transition-all duration-[600ms];
+  }
+
+  .action-button-icon {
+    @apply inline-flex h-4 w-4 items-center justify-center transition-all duration-[600ms];
+  }
+
+  .action-button-icon-loading {
+    @apply translate-y-0;
+  }
+
+  .action-button-loader {
+    @apply inline-flex h-4 w-4 items-center justify-center gap-0.5;
+  }
+
+  .action-button-loader span {
+    @apply block h-3 w-0.5 rounded-full bg-current;
+    animation: action-button-loader 900ms ease-in-out infinite;
+  }
+
+  .action-button-loader span:nth-child(2) {
+    animation-delay: 120ms;
+  }
+
+  .action-button-loader span:nth-child(3) {
+    animation-delay: 240ms;
+  }
+
+  @keyframes action-button-loader {
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: scaleY(0.45);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .action-button,
+    .action-button-text,
+    .action-button-icon {
+      @apply transition-none;
+    }
+
+    .action-button-loader span {
+      animation: none;
+    }
+  }
+
   .navbar-settings-menu-row {
     @apply grid h-auto w-full grid-cols-[1rem_minmax(0,1fr)_auto] items-center justify-start gap-2 px-3 py-2 text-left;
   }
@@ -390,24 +448,48 @@
     @apply mt-8 flex flex-wrap gap-3;
   }
 
+  .contact-section {
+    @apply w-full py-12 sm:py-16;
+  }
+
+  .contact-header {
+    @apply mb-8;
+  }
+
+  .contact-form {
+    @apply grid max-w-4xl gap-4 pt-6 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)];
+  }
+
+  .contact-fields {
+    @apply grid gap-4;
+  }
+
+  .contact-action {
+    @apply md:col-span-2;
+  }
+
   .reviews-section {
     @apply w-full overflow-hidden bg-muted/40 py-10 sm:py-12;
   }
 
-  .reviews-header {
-    @apply mb-8 max-w-2xl sm:mb-10;
+  .section-header {
+    @apply max-w-2xl;
   }
 
-  .reviews-title {
+  .section-header-title {
     @apply mt-2 text-[clamp(1.6rem,5vw,2.25rem)] font-medium leading-tight tracking-normal text-foreground;
   }
 
-  .reviews-eyebrow {
+  .section-header-eyebrow {
     @apply text-sm font-medium uppercase tracking-wide text-primary;
   }
 
-  .reviews-description {
+  .section-header-description {
     @apply mt-2 text-sm leading-6 text-muted-foreground;
+  }
+
+  .reviews-header {
+    @apply mb-8 max-w-2xl sm:mb-10;
   }
 
   .reviews-swiper .swiper-pagination {
@@ -425,6 +507,14 @@
 
   .reviews-stage {
     @apply mx-auto mb-8 mt-8 w-full max-w-5xl px-6 text-left sm:mt-10 sm:text-center;
+  }
+
+  .reviews-all-link {
+    @apply mt-2 inline-flex h-10 items-center justify-center gap-2 rounded-full border border-primary/45 bg-transparent px-5 text-[0.8125rem] font-medium tracking-[0.04em] text-primary transition-all duration-[600ms] hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background;
+  }
+
+  .reviews-all-link svg {
+    @apply h-4 w-4 transition-all duration-[600ms];
   }
 
   .reviews-quote-wrap {

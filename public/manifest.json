@@ -1,0 +1,20 @@
+{
+  "name": "Next.js Tailwind Template",
+  "short_name": "Template",
+  "description": "A clean Next.js and Tailwind CSS starter template.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "lang": "cs",
+  "icons": [
+    {
+      "src": "/images/logos/softiq.svg",
+      "sizes": "383x136",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

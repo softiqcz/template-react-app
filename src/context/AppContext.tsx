@@ -1,3 +1,5 @@
+"use client";
+
 import {
   createContext,
   Dispatch,
@@ -48,6 +50,7 @@ const defaultCookiePreferences = createCookiePreferences({
   colorMode: "light",
   technicalCookies: true,
 });
+const INITIAL_LOADING_TIMEOUT_MS = 5000;
 
 const defaultContext: AppContextType = {
   appName: "Softiq React App",
@@ -169,16 +172,56 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
+    let isMounted = true;
+    const loadingTimeout = window.setTimeout(() => {
+      if (!isMounted) {
+        return;
+      }
+
+      setBeVersion((version) => version || "unknown");
+      setIsInitialLoading(false);
+    }, INITIAL_LOADING_TIMEOUT_MS);
+
     (async () => {
       try {
         const response = await getVersionFromBe();
+        if (!isMounted) {
+          return;
+        }
+
         setBeVersion(response.data.data.version);
       } catch {
+        if (!isMounted) {
+          return;
+        }
+
         setBeVersion("unknown");
       } finally {
-        setIsInitialLoading(false);
+        if (isMounted) {
+          window.clearTimeout(loadingTimeout);
+          setIsInitialLoading(false);
+        }
       }
     })();
+
+    return () => {
+      isMounted = false;
+      window.clearTimeout(loadingTimeout);
+    };
+  }, []);
+
+  useEffect(() => {
+    function handlePageShow(event: PageTransitionEvent) {
+      if (event.persisted) {
+        setIsInitialLoading(false);
+      }
+    }
+
+    window.addEventListener("pageshow", handlePageShow);
+
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+    };
   }, []);
 
   async function reportBug(message: string) {

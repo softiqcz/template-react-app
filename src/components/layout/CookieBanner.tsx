@@ -15,7 +15,7 @@ import { createCookiePreferences } from "@/utils/cookiePreferences";
 
 export function CookieBanner() {
   const { t } = useLanguage();
-  const copy = t.cookieBanner;
+  const cookieBanner = t.cookieBanner;
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [selectedCookies, setSelectedCookies] = useState({
     analyticalCookies: true,
@@ -78,7 +78,7 @@ export function CookieBanner() {
           <div className="ui-card-content flex flex-col gap-4 pt-6">
             <div className="flex flex-wrap items-center gap-3">
               <p className="ui-card-description flex-1 min-w-0">
-                {copy.message}
+                {cookieBanner.message}
               </p>
               <Button
                 aria-expanded={isDetailsOpen}
@@ -87,20 +87,22 @@ export function CookieBanner() {
                 variant="ghost"
                 onClick={() => setIsDetailsOpen((current) => !current)}
               >
-                {copy.more}
+                {cookieBanner.more}
                 <ChevronDownIcon
                   aria-hidden="true"
                   className={`h-4 w-4 transition-transform ${isDetailsOpen ? "rotate-180" : ""}`}
                 />
               </Button>
               <Button type="button" variant="outline" onClick={rejectCookies}>
-                {copy.reject}
+                {cookieBanner.reject}
               </Button>
               <Button
                 type="button"
                 onClick={isDetailsOpen ? saveSelectedCookies : acceptAllCookies}
               >
-                {isDetailsOpen ? copy.saveSelection : copy.acceptAll}
+                {isDetailsOpen
+                  ? cookieBanner.saveSelection
+                  : cookieBanner.acceptAll}
               </Button>
             </div>
 
@@ -126,7 +128,7 @@ export function CookieBanner() {
                     className="ui-card-description"
                     htmlFor="analytical-cookies"
                   >
-                    {copy.analytical}
+                    {cookieBanner.analytical}
                   </label>
                 </div>
                 <div className="flex gap-3">
@@ -149,7 +151,7 @@ export function CookieBanner() {
                     className="ui-card-description"
                     htmlFor="technical-cookies"
                   >
-                    {copy.technical}
+                    {cookieBanner.technical}
                   </label>
                 </div>
               </div>
