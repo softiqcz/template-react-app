@@ -3,6 +3,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { CookieBanner } from "@/components/layout/CookieBanner";
 import { Footer } from "@/components/layout/Footer";
+import { InitialLoadingGate } from "@/components/layout/InitialLoadingGate";
 import { Navbar } from "@/components/layout/Navbar";
 import { AppProviders } from "@/providers/AppProviders";
 
@@ -24,12 +25,14 @@ export default function RootLayout({
     <html lang="cs">
       <body>
         <AppProviders>
-          <div className="flex min-h-screen flex-col">
-            <Navbar />
-            <div className="flex-1">{children}</div>
-            <Footer />
-            <CookieBanner />
-          </div>
+          <InitialLoadingGate>
+            <div className="flex min-h-screen flex-col">
+              <Navbar />
+              <div className="flex-1">{children}</div>
+              <Footer />
+              <CookieBanner />
+            </div>
+          </InitialLoadingGate>
         </AppProviders>
       </body>
     </html>

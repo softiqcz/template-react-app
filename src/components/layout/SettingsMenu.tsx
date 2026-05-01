@@ -12,10 +12,17 @@ import { useState } from "react";
 
 import { ReportBugDialog } from "@/components/layout/ReportBugDialog";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useAppContext } from "@/context/AppContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { languages } from "@/i18n/translations";
+import { languages, type Language } from "@/i18n/translations";
 
 type SettingsMenuProps = {
   switchId: string;
@@ -36,7 +43,6 @@ export function SettingsMenu({
   const [isBugReportOpen, setIsBugReportOpen] = useState(false);
   const navbar = t.navbar;
   const languageSwitchId = `${switchId}-language`;
-  const currentLanguage = languages.find((item) => item.code === language);
   const menuPlacementClass =
     menuPosition === "top"
       ? "mb-2 md:absolute md:bottom-full md:right-0"
@@ -126,42 +132,44 @@ export function SettingsMenu({
                 </span>
               </label>
 
-              <label
-                className="ui-button ui-button-ghost navbar-settings-menu-row cursor-pointer"
-                htmlFor={languageSwitchId}
+              <div
+                className="ui-button ui-button-ghost navbar-settings-menu-row"
               >
                 <FlagIcon className="navbar-settings-icon" aria-hidden="true" />
-                <span className="navbar-settings-text text-foreground">
-                  {navbar.language}: {currentLanguage?.shortLabel}
-                </span>
-                <span className="relative flex items-center justify-self-end">
-                  <Switch
+                <label
+                  className="navbar-settings-text text-foreground"
+                  htmlFor={languageSwitchId}
+                >
+                  {navbar.language}
+                </label>
+                <Select
+                  value={language}
+                  onValueChange={(value) => setLanguage(value as Language)}
+                >
+                  <SelectTrigger
                     id={languageSwitchId}
                     aria-label={navbar.language}
-                    checked={language === "en"}
-                    onCheckedChange={(checked) =>
-                      setLanguage(checked ? "en" : "cs")
-                    }
-                  />
-                  <span className="pointer-events-none absolute left-0 flex h-full w-full items-center px-[3px]">
-                    {language === "en" ? (
-                      <span
-                        className="ml-auto text-[10px] leading-none"
-                        style={{ filter: "grayscale(1)" }}
-                      >
-                        🇬🇧
-                      </span>
-                    ) : (
-                      <span
-                        className="text-[10px] leading-none"
-                        style={{ filter: "grayscale(1)" }}
-                      >
-                        🇨🇿
-                      </span>
-                    )}
-                  </span>
-                </span>
-              </label>
+                    className="justify-self-end"
+                  >
+                    <SelectValue placeholder={navbar.language} />
+                  </SelectTrigger>
+                  <SelectContent align="end">
+                    {languages.map((item) => (
+                      <SelectItem key={item.code} value={item.code}>
+                        <span className="flex items-center gap-2">
+                          <span
+                            className="text-[10px] leading-none"
+                            aria-hidden="true"
+                          >
+                            {item.flag}
+                          </span>
+                          {item.label}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
               <Button
                 className="navbar-settings-menu-row"

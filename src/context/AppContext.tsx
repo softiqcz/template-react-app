@@ -1,6 +1,8 @@
 import {
   createContext,
+  Dispatch,
   ReactNode,
+  SetStateAction,
   useContext,
   useEffect,
   useState,
@@ -26,6 +28,8 @@ type AppContextType = {
   beVersion: string;
   currentYear: number;
   isDark: boolean;
+  isInitialLoading: boolean;
+  setIsInitialLoading: Dispatch<SetStateAction<boolean>>;
   isCookiesAllowed: boolean;
   cookiePreferences: CookiePreferences;
   hasCookiePreference: boolean;
@@ -50,6 +54,8 @@ const defaultContext: AppContextType = {
   beVersion: "",
   currentYear: 2026,
   isDark: false,
+  isInitialLoading: true,
+  setIsInitialLoading: () => {},
   isCookiesAllowed: true,
   cookiePreferences: defaultCookiePreferences,
   hasCookiePreference: true,
@@ -78,6 +84,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
   const [isCookiesAllowed, setIsCookiesAllowed] = useState(
     defaultContext.isCookiesAllowed,
+  );
+  const [isInitialLoading, setIsInitialLoading] = useState(
+    defaultContext.isInitialLoading,
   );
   const [cookiePreferences, setCookiePreferences] = useState(
     defaultContext.cookiePreferences,
@@ -166,6 +175,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setBeVersion(response.data.data.version);
       } catch {
         setBeVersion("unknown");
+      } finally {
+        setIsInitialLoading(false);
       }
     })();
   }, []);
@@ -193,6 +204,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         appName: defaultContext.appName,
         beVersion,
         isDark,
+        isInitialLoading,
+        setIsInitialLoading,
         isCookiesAllowed,
         cookiePreferences,
         hasCookiePreference,

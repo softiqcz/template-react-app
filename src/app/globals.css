@@ -251,24 +251,159 @@
     @apply mx-auto grid min-h-[calc(100vh-142px)] max-w-5xl gap-10 px-6 py-16 lg:grid-cols-2 lg:items-center;
   }
 
+  .initial-loading-screen {
+    @apply min-h-screen bg-background text-foreground;
+  }
+
+  .initial-loading-nav {
+    @apply mx-auto flex max-w-5xl items-center justify-between gap-6 border-b px-6 py-4;
+  }
+
+  .initial-loading-logo {
+    @apply h-8 w-32 shrink-0 rounded-md bg-foreground/10;
+  }
+
+  .initial-loading-nav-lines {
+    @apply hidden items-center gap-5 md:flex;
+  }
+
+  .initial-loading-hero {
+    @apply mx-auto grid min-h-[calc(100vh-142px)] max-w-5xl gap-10 px-6 py-16 lg:grid-cols-2 lg:items-center;
+  }
+
+  .initial-loading-stack {
+    @apply max-w-xl;
+  }
+
+  .initial-loading-pill {
+    @apply mb-6 h-7 w-64 max-w-full rounded-full bg-primary/20;
+  }
+
+  .initial-loading-title {
+    @apply grid gap-4;
+  }
+
+  .initial-loading-title-line {
+    @apply h-[clamp(2.5rem,6vw,4rem)] rounded-sm bg-foreground/10;
+  }
+
+  .initial-loading-copy {
+    @apply mt-8 grid gap-3;
+  }
+
+  .initial-loading-line {
+    @apply h-3 rounded-sm bg-foreground/10;
+  }
+
+  .initial-loading-actions {
+    @apply mt-9 flex flex-wrap gap-3;
+  }
+
+  .initial-loading-action {
+    @apply h-9 rounded-md bg-primary/25;
+  }
+
+  .initial-loading-form {
+    @apply grid gap-4 border-l border-foreground/10 pl-6;
+  }
+
+  .initial-loading-input {
+    @apply h-9 rounded-md border border-foreground/10 bg-foreground/5;
+  }
+
+  .initial-loading-textarea {
+    @apply h-24 rounded-md border border-foreground/10 bg-foreground/5;
+  }
+
+  .initial-loading-check-row {
+    @apply flex items-center gap-3 pt-1;
+  }
+
+  .initial-loading-check {
+    @apply h-4 w-4 rounded-sm border border-primary bg-primary/15;
+  }
+
+  .initial-loading-review {
+    @apply relative mx-auto flex min-h-72 max-w-5xl items-center gap-8 border-t px-6 py-14;
+  }
+
+  .initial-loading-quote-mark {
+    @apply font-serif text-[5rem] leading-none text-primary;
+  }
+
+  .initial-loading-review-copy {
+    @apply grid flex-1 gap-4;
+  }
+
+  .initial-loading-pagination {
+    @apply flex flex-col items-center gap-2;
+  }
+
+  .initial-loading-pagination span {
+    @apply block h-1.5 w-1.5 rounded-full bg-foreground/30;
+  }
+
+  .initial-loading-pagination .is-active {
+    @apply h-8 w-2.5 bg-primary;
+  }
+
+  .initial-loading-logo,
+  .initial-loading-line,
+  .initial-loading-pill,
+  .initial-loading-title-line,
+  .initial-loading-action,
+  .initial-loading-input,
+  .initial-loading-textarea,
+  .initial-loading-check,
+  .initial-loading-pagination span {
+    animation: initial-loading-pulse 1600ms ease-in-out infinite;
+  }
+
+  @keyframes initial-loading-pulse {
+    0%,
+    100% {
+      opacity: 0.42;
+      transform: translateY(0);
+    }
+
+    50% {
+      opacity: 0.78;
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .initial-loading-logo,
+    .initial-loading-line,
+    .initial-loading-pill,
+    .initial-loading-title-line,
+    .initial-loading-action,
+    .initial-loading-input,
+    .initial-loading-textarea,
+    .initial-loading-check,
+    .initial-loading-pagination span {
+      animation: none;
+    }
+  }
+
   .ui-below-subtitle-action {
     @apply mt-8 flex flex-wrap gap-3;
   }
 
   .reviews-section {
-    @apply w-full overflow-hidden bg-muted/40 py-8;
+    @apply w-full overflow-hidden bg-muted/40 py-10 sm:py-12;
   }
 
   .reviews-header {
-    @apply mb-10 max-w-2xl;
+    @apply mb-8 max-w-2xl sm:mb-10;
   }
 
   .reviews-title {
-    @apply mt-2 text-2xl font-semibold tracking-tight text-foreground;
+    @apply mt-2 text-[clamp(1.6rem,5vw,2.25rem)] font-medium leading-tight tracking-normal text-foreground;
   }
 
   .reviews-eyebrow {
-    @apply text-sm font-semibold uppercase tracking-wide text-primary;
+    @apply text-sm font-medium uppercase tracking-wide text-primary;
   }
 
   .reviews-description {
@@ -276,7 +411,7 @@
   }
 
   .reviews-swiper .swiper-pagination {
-    @apply right-0 flex flex-col items-center justify-center;
+    @apply right-3 flex flex-col items-center justify-center sm:right-0;
     --swiper-pagination-bullet-vertical-gap: 2px;
   }
 
@@ -289,20 +424,20 @@
   }
 
   .reviews-stage {
-    @apply mx-8 mt-10 mb-8 text-center;
+    @apply mx-auto mb-8 mt-8 w-full max-w-5xl px-6 text-left sm:mt-10 sm:text-center;
   }
 
   .reviews-quote-wrap {
-    @apply relative py-6 pb-5 mx-56 transition-all duration-[340ms] ease-in-out opacity-100 translate-y-0;
+    @apply relative mx-0 py-5 pr-9 pl-7 transition-all duration-[340ms] ease-in-out opacity-100 translate-y-0 sm:mx-16 sm:px-12 sm:py-6 lg:mx-28 xl:mx-36;
   }
 
   .reviews-quote-mark {
-    @apply absolute top-7 font-serif text-[5rem] leading-[0.55] text-primary select-none pointer-events-none;
-    left: -0.35rem;
+    @apply absolute top-6 font-serif text-[4.25rem] leading-[0.55] text-primary select-none pointer-events-none sm:top-7 sm:text-[5rem];
+    left: -0.15rem;
   }
 
   .reviews-meta {
-    @apply flex items-center gap-4 pl-8 mt-5;
+    @apply mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 pl-0 sm:pl-8;
   }
 
   .reviews-stars {
@@ -325,11 +460,23 @@
   }
 
   .reviews-swiper {
-    @apply max-w-3xl;
-    height: 220px;
+    @apply w-full max-w-5xl;
+    height: clamp(300px, 72vw, 380px);
+  }
+
+  @media (min-width: 640px) {
+    .reviews-swiper {
+      height: 320px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .reviews-swiper {
+      height: 300px;
+    }
   }
 
   .reviews-swiper .swiper-slide {
-    @apply h-auto;
+    @apply flex h-auto items-center;
   }
 }

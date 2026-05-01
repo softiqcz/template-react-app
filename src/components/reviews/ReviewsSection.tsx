@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
@@ -94,7 +94,6 @@ export function ReviewsSection() {
   const { language, t } = useLanguage();
   const copy = t.reviews;
   const swiperRef = useRef<SwiperType | null>(null);
-  const [current, setCurrent] = useState(0);
 
   return (
     <section className="reviews-section">
@@ -123,7 +122,6 @@ export function ReviewsSection() {
           pagination={{ clickable: true }}
           slidesPerView={1}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
-          onSlideChange={(swiper) => setCurrent(swiper.realIndex)}
         >
           {reviews.map((review) => (
             <SwiperSlide key={review.author}>
