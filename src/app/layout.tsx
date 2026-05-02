@@ -1,11 +1,11 @@
 import "./globals.css";
 import "swiper/css";
 import "swiper/css/pagination";
-import { CookieBanner } from "@/components/layout/CookieBanner";
-import { Footer } from "@/components/layout/Footer";
-import { InitialLoadingGate } from "@/components/layout/InitialLoadingGate";
-import { Navbar } from "@/components/layout/Navbar";
-import { SettingsMenuOffcanvas } from "@/components/layout/SettingsMenuOffcanvas";
+import { CookieBanner } from "@/components/layout/cookie/CookieBanner";
+import { Footer } from "@/components/layout/base/Footer";
+import { InitialLoadingGate } from "@/components/sections/InitialLoadingGate";
+import { Navbar } from "@/components/layout/base/Navbar";
+import { SettingsMenuOffcanvas } from "@/components/layout/settings/SettingsMenuOffcanvas";
 import { AppProviders } from "@/providers/AppProviders";
 
 export const metadata = {

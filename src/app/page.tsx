@@ -2,9 +2,9 @@
 
 import { ArrowRightIcon, SparklesIcon } from "@heroicons/react/24/outline";
 
-import { ActionButton } from "@/components/ActionButton";
-import { ContactSection } from "@/components/contact/ContactSection";
-import { ReviewsSection } from "@/components/reviews/ReviewsSection";
+import { ActionButton } from "@/components/buttons/ActionButton";
+import { ContactSection } from "@/components/sections/ContactSection";
+import { ReviewsSection } from "@/components/sections/ReviewsSection";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

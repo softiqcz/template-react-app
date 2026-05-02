@@ -3,25 +3,20 @@
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { FormEvent, useState } from "react";
 
-import { ActionButton } from "@/components/ActionButton";
-import { SectionHeader } from "@/components/SectionHeader";
+import { ActionButton } from "@/components/buttons/ActionButton";
+import { SectionHeader } from "@/components/sections/SectionHeader";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { INITIAL_CONTACT_FORM } from "@/constants/contactForm";
+import { CONTACT_ADMIN_EMAIL } from "@/constants/contact";
 import { useLanguage } from "@/context/LanguageContext";
 import { postContactMessage } from "@/utils";
-import { CONTACT_ADMIN_EMAIL } from "@/utils/constants";
-
-const initialContactForm = {
-  name: "",
-  email: "",
-  message: "",
-};
 
 export function ContactSection() {
   const { t } = useLanguage();
   const contact = t.home.contact;
-  const [contactForm, setContactForm] = useState(initialContactForm);
+  const [contactForm, setContactForm] = useState(INITIAL_CONTACT_FORM);
   const [isSubmittingContact, setIsSubmittingContact] = useState(false);
 
   const isContactFormValid =
@@ -29,10 +24,7 @@ export function ContactSection() {
     contactForm.email.trim() &&
     contactForm.message.trim();
 
-  function updateContactField(
-    field: keyof typeof contactForm,
-    value: string,
-  ) {
+  function updateContactField(field: keyof typeof contactForm, value: string) {
     setContactForm((currentForm) => ({
       ...currentForm,
       [field]: value,
@@ -58,7 +50,7 @@ export function ContactSection() {
 
     try {
       await postContactMessage(payload);
-      setContactForm(initialContactForm);
+      setContactForm(INITIAL_CONTACT_FORM);
     } finally {
       setIsSubmittingContact(false);
     }

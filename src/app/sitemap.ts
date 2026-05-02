@@ -3,7 +3,13 @@ import { existsSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 
 const APP_DIR = path.join(process.cwd(), "src", "app");
-const PAGE_FILES = new Set(["page.tsx", "page.ts", "page.jsx", "page.js", "page.mdx"]);
+const PAGE_FILES = new Set([
+  "page.tsx",
+  "page.ts",
+  "page.jsx",
+  "page.js",
+  "page.mdx",
+]);
 const IGNORED_SEGMENT_PREFIXES = ["_", "@"] as const;
 
 type RouteEntry = {
@@ -58,14 +64,17 @@ function scanRoutes(directory: string, segments: string[] = []): RouteEntry[] {
   }
 
   const entries = readdirSync(directory, { withFileTypes: true });
-  const pageFile = entries.find((entry) => entry.isFile() && PAGE_FILES.has(entry.name));
+  const pageFile = entries.find(
+    (entry) => entry.isFile() && PAGE_FILES.has(entry.name),
+  );
   const routes: RouteEntry[] = [];
 
   if (pageFile) {
     const routeSegments = getRouteSegments(segments);
 
     if (routeSegments) {
-      const pathname = routeSegments.length > 0 ? `/${routeSegments.join("/")}` : "/";
+      const pathname =
+        routeSegments.length > 0 ? `/${routeSegments.join("/")}` : "/";
       const pagePath = path.join(directory, pageFile.name);
 
       routes.push({
@@ -81,7 +90,12 @@ function scanRoutes(directory: string, segments: string[] = []): RouteEntry[] {
       continue;
     }
 
-    routes.push(...scanRoutes(path.join(directory, entry.name), [...segments, entry.name]));
+    routes.push(
+      ...scanRoutes(path.join(directory, entry.name), [
+        ...segments,
+        entry.name,
+      ]),
+    );
   }
 
   return routes;

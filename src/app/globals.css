@@ -536,7 +536,7 @@
   }
 
   .reviews-star-icon {
-    @apply w-3.5 h-3.5;
+    @apply w-3.5 h-3.5 fill-current;
   }
 
   .reviews-author-line {

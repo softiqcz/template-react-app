@@ -74,11 +74,11 @@ const translationPairs = {
       title: ["Starter Form", "Startovací formulář"],
     },
     contact: {
-        description: [
-          "Leave a message, we are glad to help you.",
-          "Zanechte nám zprávu, rádi Vám poradíme.",
-        ],
-        eyebrow: ["Contact", "Kontakt"],
+      description: [
+        "Leave a message, we are glad to help you.",
+        "Zanechte nám zprávu, rádi Vám poradíme.",
+      ],
+      eyebrow: ["Contact", "Kontakt"],
       emailLabel: ["Email", "E-mail"],
       emailPlaceholder: ["name@example.com", "jmeno@example.com"],
       messageLabel: ["Message", "Zpráva"],

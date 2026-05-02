@@ -7,8 +7,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 
+import { CookieOption } from "@/components/layout/cookie/CookieOption";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useAppContext } from "@/context/AppContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { createCookiePreferences } from "@/utils/cookiePreferences";
@@ -108,52 +108,30 @@ export function CookieBanner() {
 
             {isDetailsOpen ? (
               <div className="grid gap-3 border-t pt-4 sm:grid-cols-2">
-                <div className="flex gap-3">
-                  <Checkbox
-                    id="analytical-cookies"
-                    checked={selectedCookies.analyticalCookies}
-                    className="mt-0.5"
-                    onCheckedChange={(checked) =>
-                      setSelectedCookies((current) => ({
-                        ...current,
-                        analyticalCookies: checked === true,
-                      }))
-                    }
-                  />
-                  <ChartBarIcon
-                    aria-hidden="true"
-                    className="h-5 w-5 shrink-0 text-muted-foreground"
-                  />
-                  <label
-                    className="ui-card-description"
-                    htmlFor="analytical-cookies"
-                  >
-                    {cookieBanner.analytical}
-                  </label>
-                </div>
-                <div className="flex gap-3">
-                  <Checkbox
-                    id="technical-cookies"
-                    checked={selectedCookies.technicalCookies}
-                    className="mt-0.5"
-                    onCheckedChange={(checked) =>
-                      setSelectedCookies((current) => ({
-                        ...current,
-                        technicalCookies: checked === true,
-                      }))
-                    }
-                  />
-                  <Cog6ToothIcon
-                    aria-hidden="true"
-                    className="h-5 w-5 shrink-0 text-muted-foreground"
-                  />
-                  <label
-                    className="ui-card-description"
-                    htmlFor="technical-cookies"
-                  >
-                    {cookieBanner.technical}
-                  </label>
-                </div>
+                <CookieOption
+                  id="analytical-cookies"
+                  checked={selectedCookies.analyticalCookies}
+                  description={cookieBanner.analytical}
+                  icon={ChartBarIcon}
+                  onCheckedChange={(checked) =>
+                    setSelectedCookies((current) => ({
+                      ...current,
+                      analyticalCookies: checked,
+                    }))
+                  }
+                />
+                <CookieOption
+                  id="technical-cookies"
+                  checked={selectedCookies.technicalCookies}
+                  description={cookieBanner.technical}
+                  icon={Cog6ToothIcon}
+                  onCheckedChange={(checked) =>
+                    setSelectedCookies((current) => ({
+                      ...current,
+                      technicalCookies: checked,
+                    }))
+                  }
+                />
               </div>
             ) : null}
           </div>

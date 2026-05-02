@@ -1,7 +1,13 @@
 import { toast } from "sonner";
 
-const baseURL = "http://svemar03.local:5000/api/v2";
-// const baseURL = "http://localhost:8080/api/v2";
+import {
+  API_BASE_URL,
+  API_ENDPOINTS,
+  API_LOADING_MESSAGES,
+  DEFAULT_ERROR_MESSAGE,
+  DEFAULT_SUCCESS_MESSAGE,
+  TOAST_DISMISS_DELAY_MS,
+} from "@/constants/api";
 
 // 1) Generic request function types
 type Method = "GET" | "POST" | "PUT" | "DELETE";
@@ -16,17 +22,12 @@ interface RequestOptions {
   loadingMessage?: string;
 }
 
-const DEFAULT_ERROR_MESSAGE = "Něco se pokazilo";
-
 export const dismissToastLater = (toastId: string | number) => {
-  setTimeout(() => toast.dismiss(toastId), 3000);
+  setTimeout(() => toast.dismiss(toastId), TOAST_DISMISS_DELAY_MS);
 };
 
-const buildURL = (
-  path: string,
-  params?: RequestOptions["params"],
-) => {
-  const url = new URL(`${baseURL}${path}`);
+const buildURL = (path: string, params?: RequestOptions["params"]) => {
+  const url = new URL(`${API_BASE_URL}${path}`);
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
       if (value !== undefined) url.searchParams.append(key, String(value));
@@ -63,7 +64,7 @@ const showResponseToast = (
 ) => {
   const message = getResponseMessage(data);
   if (status >= 200 && status < 300) {
-    toast.success(message || "Hotovo");
+    toast.success(message || DEFAULT_SUCCESS_MESSAGE);
   } else {
     toast.error(message || fallbackErrorMessage);
   }
@@ -101,7 +102,6 @@ export const apiRequestNoAuth = async ({
     if (useToast) showResponseToast(status, resData, toastId);
     return { status, data: resData };
   } catch (error: unknown) {
-    console.error(`API ${method} ${path} failed:`, error);
     if (useToast) showThrownErrorToast(error, toastId);
     throw error;
   }
@@ -133,7 +133,6 @@ export const apiRequest = async ({
     if (useToast) showResponseToast(status, resData, toastId);
     return { status, data: resData };
   } catch (error: unknown) {
-    console.error(`API ${method} ${path} failed:`, error);
     if (useToast) showThrownErrorToast(error, toastId);
     throw error;
   }
@@ -142,28 +141,30 @@ export const apiRequest = async ({
 // 4) Specific API endpoints
 export const getVersionFromBe = () =>
   apiRequestNoAuth({
-    path: "/public/version",
+    path: API_ENDPOINTS.VERSION,
     method: "GET",
     useToast: true,
-    loadingMessage: "Načítá se aplikace...",
+    loadingMessage: API_LOADING_MESSAGES.VERSION,
   });
 
-export const postContactMessage = (payload: NonNullable<RequestOptions["data"]>) =>
+export const postContactMessage = (
+  payload: NonNullable<RequestOptions["data"]>,
+) =>
   apiRequestNoAuth({
-    path: "/public/contact",
+    path: API_ENDPOINTS.CONTACT,
     method: "POST",
     data: payload,
     useToast: true,
-    loadingMessage: "Odesílá se zpráva z konktaktního formuláře...",
+    loadingMessage: API_LOADING_MESSAGES.CONTACT,
   });
 
 export const postFeatureProposal = (
   payload: NonNullable<RequestOptions["data"]>,
 ) =>
   apiRequestNoAuth({
-    path: "/user/utils/support/request",
+    path: API_ENDPOINTS.SUPPORT_REQUEST,
     method: "POST",
     data: payload,
     useToast: true,
-    loadingMessage: "Odesílá se zpráva na podporu...",
+    loadingMessage: API_LOADING_MESSAGES.SUPPORT_REQUEST,
   });
