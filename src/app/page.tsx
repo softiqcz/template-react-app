@@ -57,40 +57,47 @@ export default function Home() {
           </div>
         </section>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>{home.form.title}</CardTitle>
-            <CardDescription>{home.form.description}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="project-name">{home.form.nameLabel}</Label>
-              <Input
-                id="project-name"
-                placeholder={home.form.namePlaceholder}
+        <section id="components" aria-labelledby="components-heading">
+          <h2 id="components-heading" className="sr-only">
+            {home.secondaryAction}
+          </h2>
+          <Card>
+            <CardHeader>
+              <CardTitle>{home.form.title}</CardTitle>
+              <CardDescription>{home.form.description}</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="project-name">{home.form.nameLabel}</Label>
+                <Input
+                  id="project-name"
+                  placeholder={home.form.namePlaceholder}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="project-notes">{home.form.notesLabel}</Label>
+                <Textarea
+                  id="project-notes"
+                  placeholder={home.form.notesPlaceholder}
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <Checkbox id="template-ready" />
+                <Label htmlFor="template-ready">{home.form.readyLabel}</Label>
+              </div>
+              <ActionButton
+                className="w-fit"
+                prompt={home.contact.submit}
+                isLoading
+                icon={<ArrowRightIcon className="h-4 w-4" />}
               />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="project-notes">{home.form.notesLabel}</Label>
-              <Textarea
-                id="project-notes"
-                placeholder={home.form.notesPlaceholder}
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <Checkbox id="template-ready" />
-              <Label htmlFor="template-ready">{home.form.readyLabel}</Label>
-            </div>
-            <ActionButton
-              className="w-fit"
-              prompt={home.contact.submit}
-              isLoading
-              icon={<ArrowRightIcon className="h-4 w-4" />}
-            />
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </section>
       </main>
-      <ContactSection />
+      <div id="docs">
+        <ContactSection />
+      </div>
       <ReviewsSection />
     </>
   );

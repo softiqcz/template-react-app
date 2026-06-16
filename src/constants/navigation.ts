@@ -1,7 +1,7 @@
 export const NAV_ITEMS = [
   { labelKey: "home", href: "/" },
-  { labelKey: "components", href: "#components" },
-  { labelKey: "docs", href: "#docs" },
+  { labelKey: "components", href: "/#components" },
+  { labelKey: "docs", href: "/#docs" },
 ] as const;
 
 export const EXTERNAL_LINKS = [
