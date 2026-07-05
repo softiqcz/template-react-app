@@ -59,7 +59,7 @@ function ProcessingPurposeSection() {
 
 export default function PersonalDataProcessingPage() {
   return (
-    <main id="main-content" className="legal-document site-container py-16">
+    <main className="site-container py-16">
       <section className="max-w-3xl">
         <p className="text-sm font-medium uppercase tracking-wide text-primary">
           platné pro službu Hlídací pes na webu softiq.cz/hlidaci-pes od

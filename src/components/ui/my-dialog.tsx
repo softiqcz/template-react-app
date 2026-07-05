@@ -25,31 +25,9 @@ function MyDialog({
   closeOnBackdropClick = true,
   isOpen,
   onClick,
-  onKeyDown,
   onOpenChange,
   ...props
 }: MyDialogProps) {
-  const overlayRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    if (!isOpen) return;
-
-    const previouslyFocused = document.activeElement as HTMLElement | null;
-    const frame = window.requestAnimationFrame(() => {
-      if (overlayRef.current?.contains(document.activeElement)) return;
-
-      const focusable = overlayRef.current?.querySelector<HTMLElement>(
-        'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
-      );
-      focusable?.focus();
-    });
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      previouslyFocused?.focus();
-    };
-  }, [isOpen]);
-
   if (!isOpen) {
     return null;
   }
@@ -62,46 +40,11 @@ function MyDialog({
     }
   }
 
-  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
-    onKeyDown?.(event);
-    if (event.defaultPrevented) return;
-
-    if (event.key === "Escape") {
-      event.preventDefault();
-      onOpenChange(false);
-      return;
-    }
-
-    if (event.key !== "Tab") return;
-
-    const focusable = Array.from(
-      overlayRef.current?.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
-      ) ?? [],
-    );
-    if (focusable.length === 0) {
-      event.preventDefault();
-      return;
-    }
-
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  }
-
   return (
     <MyDialogContext.Provider value={{ onOpenChange }}>
       <div
-        ref={overlayRef}
         className={cn("ui-dialog-overlay", className)}
         onClick={handleBackdropClick}
-        onKeyDown={handleKeyDown}
         {...props}
       >
         {children}
@@ -134,13 +77,7 @@ const MyDialogSurface = React.forwardRef<HTMLDivElement, MyDialogSurfaceProps>(
   ({ asChild = false, className, ...props }, ref) => {
     const Comp = asChild ? Slot : "div";
 
-    return (
-      <Comp
-        ref={ref}
-        className={cn("ui-card ui-dialog-surface", className)}
-        {...props}
-      />
-    );
+    return <Comp ref={ref} className={cn("ui-card", className)} {...props} />;
   },
 );
 MyDialogSurface.displayName = "MyDialogSurface";

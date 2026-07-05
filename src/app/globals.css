@@ -2,53 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  body *:not(button):not(.ui-button) {
-    border-color: transparent !important;
-  }
-}
-
 @layer base {
   :root {
-    --background: 236 240 243;
-    --foreground: 49 52 75;
-    --card: 236 240 243;
-    --card-foreground: 49 52 75;
-    --primary: 15 117 77;
-    --primary-foreground: 49 52 75;
-    --secondary: 56 157 198;
-    --secondary-foreground: 49 52 75;
-    --muted: 236 240 243;
-    --muted-foreground: 68 71 106;
-    --accent: 236 240 243;
-    --accent-foreground: 49 52 75;
-    --border: 102 121 158;
-    --input: 102 121 158;
-    --ring: 18 135 89;
+    --background: 255 255 255;
+    --foreground: 2 8 23;
+    --card: 255 255 255;
+    --card-foreground: 2 8 23;
+    --primary: 255 160 46;
+    --primary-foreground: 15 23 42;
+    --secondary: 241 245 249;
+    --secondary-foreground: 15 23 42;
+    --muted: 241 245 249;
+    --muted-foreground: 100 116 139;
+    --accent: 241 245 249;
+    --accent-foreground: 15 23 42;
+    --border: 226 232 240;
+    --input: 226 232 240;
+    --ring: 2 8 23;
     --radius: 0.5rem;
-    --neo-shadow-light: #ffffff;
-    --neo-shadow-dark: #b8b9be;
     color-scheme: light;
   }
   html.dark,
   html[data-theme="dark"] {
-    --background: 38 40 51;
-    --foreground: 236 240 243;
-    --card: 38 40 51;
-    --card-foreground: 236 240 243;
-    --primary: 32 178 122;
-    --primary-foreground: 236 240 243;
-    --secondary: 56 157 198;
-    --secondary-foreground: 236 240 243;
-    --muted: 38 40 51;
-    --muted-foreground: 147 165 190;
-    --accent: 38 40 51;
-    --accent-foreground: 236 240 243;
-    --border: 102 121 158;
-    --input: 102 121 158;
-    --ring: 32 178 122;
-    --neo-shadow-light: #353844;
-    --neo-shadow-dark: #181a22;
+    --background: 2 8 23;
+    --foreground: 248 250 252;
+    --card: 2 8 23;
+    --card-foreground: 248 250 252;
+    --primary: 255 160 46;
+    --primary-foreground: 248 250 252;
+    --secondary: 30 41 59;
+    --secondary-foreground: 248 250 252;
+    --muted: 30 41 59;
+    --muted-foreground: 148 163 184;
+    --accent: 30 41 59;
+    --accent-foreground: 248 250 252;
+    --border: 30 41 59;
+    --input: 30 41 59;
+    --ring: 203 213 225;
     color-scheme: dark;
   }
 
@@ -61,7 +51,7 @@
     background: rgb(var(--background));
     color: rgb(var(--foreground));
     font-family:
-      "Nunito Sans",
+      Inter,
       ui-sans-serif,
       system-ui,
       -apple-system,
@@ -79,11 +69,9 @@
 @layer components {
   /*TOASTER*/
   [data-sonner-toast] {
-    @apply !bg-background !text-foreground !border !border-foreground/10 !rounded-[10px] !pr-16;
+    @apply !bg-background !text-foreground !border !border-foreground/10 !rounded-[10px];
     position: relative;
-    box-shadow:
-      6px 6px 12px var(--neo-shadow-dark),
-      -6px -6px 12px var(--neo-shadow-light) !important;
+    overflow: hidden;
   }
   [data-sonner-toast]::before {
     content: "";
@@ -98,32 +86,8 @@
     @apply !bg-red-700 !text-white;
   }
 
-  [data-sonner-toast] [data-close-button] {
-    @apply !right-2 !left-auto !top-1/2 !size-11 !translate-x-0 !-translate-y-1/2 !rounded-lg !border-transparent !bg-background !text-muted-foreground !transition-all !duration-200 focus-visible:!outline-none focus-visible:!ring-2 focus-visible:!ring-ring focus-visible:!ring-offset-2;
-    box-shadow:
-      1px 1px 2px var(--neo-shadow-dark),
-      -1px -1px 2px var(--neo-shadow-light);
-  }
-
-  [data-sonner-toast] [data-close-button]:hover {
-    @apply !text-foreground;
-    box-shadow:
-      3px 3px 6px var(--neo-shadow-dark),
-      -3px -3px 6px var(--neo-shadow-light);
-  }
-
-  [data-sonner-toast] [data-close-button]:active {
-    box-shadow:
-      inset 2px 2px 5px var(--neo-shadow-dark),
-      inset -3px -3px 7px var(--neo-shadow-light);
-  }
-
-  [data-sonner-toast][data-type="error"] [data-close-button] {
-    @apply !bg-red-700 !text-white;
-  }
-
   .site-container {
-    @apply mx-auto max-w-[71.25rem] px-6;
+    @apply mx-auto max-w-5xl px-6;
   }
 
   .navbar-mobile-menu-control {
@@ -131,59 +95,35 @@
   }
 
   .ui-button {
-    @apply inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-transparent bg-background px-4 text-base font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
-    box-shadow:
-      3px 3px 6px var(--neo-shadow-dark),
-      -3px -3px 6px var(--neo-shadow-light);
-  }
-
-  .ui-button:hover {
-    @apply border-transparent;
-    box-shadow:
-      6px 6px 12px var(--neo-shadow-dark),
-      -6px -6px 12px var(--neo-shadow-light);
-  }
-  .ui-button:active {
-    box-shadow:
-      inset 2px 2px 5px var(--neo-shadow-dark),
-      inset -3px -3px 7px var(--neo-shadow-light);
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
   }
 
   .ui-button-default {
-    @apply text-primary;
+    @apply bg-primary text-primary-foreground shadow hover:bg-primary/90;
   }
 
   .ui-button-outline {
-    @apply border-transparent text-foreground;
+    @apply border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground;
   }
 
   .ui-button-secondary {
-    @apply text-secondary;
+    @apply bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80;
   }
 
   .ui-button-ghost {
-    @apply border-transparent text-muted-foreground;
-    box-shadow:
-      1px 1px 2px var(--neo-shadow-dark),
-      -1px -1px 2px var(--neo-shadow-light);
-  }
-  .ui-button-ghost:hover {
-    @apply text-foreground;
-    box-shadow:
-      3px 3px 6px var(--neo-shadow-dark),
-      -3px -3px 6px var(--neo-shadow-light);
+    @apply hover:bg-accent hover:text-accent-foreground;
   }
 
   .ui-button-size-default {
-    @apply h-11 px-4 py-2;
+    @apply h-9 px-4 py-2;
   }
 
   .ui-button-size-sm {
-    @apply h-11 rounded-lg px-4 text-sm;
+    @apply h-8 rounded-md px-3 text-xs;
   }
 
   .ui-button-size-icon {
-    @apply h-11 w-11 p-0;
+    @apply h-9 w-9;
   }
 
   .action-button {
@@ -273,7 +213,7 @@
   }
 
   .ui-card {
-    @apply rounded-lg border border-foreground/10 bg-card text-card-foreground;
+    @apply rounded-lg border bg-card text-card-foreground shadow-sm;
   }
 
   .ui-card-header {
@@ -304,12 +244,6 @@
     @apply w-full max-w-lg;
   }
 
-  .ui-dialog-surface {
-    box-shadow:
-      10px 10px 20px var(--neo-shadow-dark),
-      -10px -10px 20px var(--neo-shadow-light);
-  }
-
   .ui-dialog-content {
     @apply flex flex-col gap-4 pt-6;
   }
@@ -336,11 +270,11 @@
 
   .ui-input,
   .ui-textarea {
-    @apply flex w-full rounded-lg border border-input bg-foreground/[0.04] text-base text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+    @apply flex w-full rounded-md border border-input bg-transparent text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm;
   }
 
   .ui-input {
-    @apply h-11 px-3 py-2 transition-all duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground;
+    @apply h-9 px-3 py-1 transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground;
   }
 
   .ui-textarea {
@@ -348,7 +282,7 @@
   }
 
   .ui-label {
-    @apply text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+    @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
   }
 
   .ui-checkbox {
@@ -368,64 +302,7 @@
   }
 
   .ui-title {
-    @apply mt-4 text-[clamp(1.75rem,4vw,3rem)] font-medium leading-none tracking-tight text-foreground;
-  }
-
-  .neo-raised {
-    @apply rounded-lg border border-foreground/10 bg-background;
-  }
-
-  .neo-inset {
-    @apply rounded-lg bg-foreground/[0.04];
-  }
-
-  .neo-tab {
-    @apply inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-transparent bg-background px-4 py-2 text-base font-medium text-muted-foreground transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
-    box-shadow:
-      3px 3px 6px var(--neo-shadow-dark),
-      -3px -3px 6px var(--neo-shadow-light);
-  }
-  .neo-tab:hover {
-    @apply border-transparent text-foreground;
-    box-shadow:
-      6px 6px 12px var(--neo-shadow-dark),
-      -6px -6px 12px var(--neo-shadow-light);
-  }
-  .neo-tab-active {
-    @apply text-primary;
-    box-shadow:
-      inset 2px 2px 5px var(--neo-shadow-dark),
-      inset -3px -3px 7px var(--neo-shadow-light);
-  }
-
-  .neo-table {
-    @apply overflow-x-auto rounded-lg border border-foreground/10 bg-background;
-    box-shadow:
-      6px 6px 12px var(--neo-shadow-dark),
-      -6px -6px 12px var(--neo-shadow-light);
-  }
-
-  .neo-table thead {
-    background-color: rgb(var(--foreground) / 0.06);
-  }
-
-  .neo-table tbody tr > :first-child {
-    color: rgb(var(--primary));
-  }
-
-  .legal-document > div > section {
-    @apply rounded-lg border border-foreground/10 p-6;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      scroll-behavior: auto !important;
-      transition-duration: 0.01ms !important;
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-    }
+    @apply mt-4 text-4xl font-semibold tracking-tight text-foreground sm:text-6xl;
   }
 
   .ui-full-page {
@@ -655,7 +532,7 @@
 
   .reviews-stars {
     @apply flex gap-0.5;
-    color: #7dab44;
+    color: #f0a500;
   }
 
   .reviews-star-icon {
