@@ -1,0 +1,12 @@
+{
+  "designSystemId": "b7d30e5d-2939-439b-8036-f0330c2b2ea9",
+  "installScope": "project",
+  "packageId": "63ca5eb2-65e5-487d-b17c-92832e00caaa",
+  "skillFolderName": "typeui-design-system",
+  "slug": "neumorphism",
+  "source": "workspace",
+  "templateSlug": "neumorphism",
+  "type": "typeui-design-system",
+  "variant": "workspace",
+  "workspaceId": "7fabfb10-24a9-4052-848f-a45ccc3873bd"
+}
