@@ -18,7 +18,7 @@ export default function NotFound() {
   const notFound = t.notFound;
 
   return (
-    <main className="ui-full-page">
+    <main id="main-content" className="ui-full-page">
       <section>
         <Badge variant="secondary" className="gap-1.5">
           <LinkSlashIcon className="size-3" aria-hidden="true" />

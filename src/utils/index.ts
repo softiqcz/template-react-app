@@ -18,6 +18,7 @@ interface RequestOptions {
   data?: Record<string, unknown>;
   params?: Record<string, string | number | boolean>;
   token?: string;
+  email?: string;
   useToast?: boolean;
   loadingMessage?: string;
 }
@@ -114,9 +115,15 @@ export const apiRequest = async ({
   data,
   params,
   token,
+  email,
   useToast = false,
   loadingMessage,
 }: RequestOptions) => {
+  if (!email || !token) {
+    throw new Error(
+      "Secured requests require the current user's email and token.",
+    );
+  }
   const toastId = useToast ? toast.loading(loadingMessage) : undefined;
 
   try {
@@ -124,9 +131,11 @@ export const apiRequest = async ({
       method,
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
+        Authorization: `Bearer ${token}`,
+        "X-Auth-Email": email,
+        "X-Auth-Token": token,
       },
-      body: data ? JSON.stringify(data) : undefined,
+      body: JSON.stringify({ ...(data ?? {}), email, token }),
     });
 
     const { status, data: resData } = await parseResponse(res);

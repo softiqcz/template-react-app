@@ -30,6 +30,7 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/image") ||
     pathname.startsWith("/favicon") ||
     pathname.startsWith("/_next");
+  const isRouteHandler = pathname.startsWith("/session/");
 
   // ----------------------------
   // RATE LIMIT CHECK
@@ -52,7 +53,7 @@ export async function proxy(request: NextRequest) {
   /* ---------------------------------
    * 2️⃣ PAGE ROUTES — GET only
    * --------------------------------- */
-  if (request.method == "POST") {
+  if (request.method == "POST" && !isRouteHandler) {
     console.warn("[BLOCKED PAGE METHOD]", request.method, pathname);
 
     return new NextResponse("Method Not Allowed", { status: 405 });

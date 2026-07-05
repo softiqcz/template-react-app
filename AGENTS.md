@@ -1,101 +1,140 @@
 # AGENTS.md
 
-## Design Philosophy
+## Project UI Direction
 
-Cards are so 2016.
+This application uses a restrained interface with **neumorphism reserved for
+buttons and table wrappers**. Preserve the existing visual system when adding
+or changing UI. The source of truth is `src/app/globals.css`.
 
-This project uses a **typographic-first, motion-driven** design language. Every UI decision should feel like it belongs in 2026 — not a Dribbble shot from eight years ago.
+## Core Surface Rules
 
----
+- Use the same `--background` surface for the page, panels, controls, and tables.
+- Panels, cards, inputs, dialogs, and page sections remain flat. Table wrappers
+  are the sole non-button exception and use the shared raised shadow.
+- Do not apply raised or inset shadows to non-button elements.
+- Use spacing, typography, and subtle flat fills to separate non-button content.
+- Do not add gradients.
+- Keep radii consistent at `rounded-lg` / `--radius` (8px).
+- Non-button elements must not have visible borders. Inputs, tables, panels,
+  cards, and dividers rely on spacing and subtle flat fills.
+- Do not introduce arbitrary shadow values. Reuse `--neo-shadow-light` and
+  `--neo-shadow-dark` with the existing shadow recipes.
 
-## Core Rules
+## Buttons and Tabs
 
-### No cards
+Every button-like control must look like the same component family.
 
-Do not reach for `rounded-lg border bg-card p-4` as a default container. Cards create visual noise, flatten hierarchy, and make every section look the same. Instead:
+- Standard height: at least 44px (`min-h-11`).
+- Typography: `text-base font-medium`; never bold or semibold.
+- Default: same background as the page, no visible border, 8px radius, and a
+  raised neumorphic shadow.
+- Hover: increase elevation without adding a border.
+- Active/selected: use the inset shadow so the control looks pressed.
+- Focus: keep the visible two-pixel focus ring and offset.
+- Disabled: preserve the shape, reduce opacity, and disable interaction.
+- Icon buttons use the same 44px height and pressed/hover behavior.
+- Dataset tabs (`Agenti`, `Subjekty`, `Statistiky`) use `neo-tab`; they must
+  remain visually identical to other buttons.
+- Never create flat ghost buttons whose affordance appears only on hover.
 
-- Let **typography carry the weight** — size, weight, and spacing do more than a border ever will
-- Use **full-bleed sections** with generous whitespace as the container
-- Separate content with **dividers, rhythm, and negative space** — not boxes
+## Inputs
 
-### Motion is meaning
+- Inputs have no visible border or neumorphic shadow.
+- Use the shared `ui-input` class and its subtle flat fill.
+- Standard height is 44px.
+- Every input needs an associated visible label or an accessible screen-reader
+  label.
+- Preserve clear focus rings, keyboard behavior, and disabled states.
 
-Animations are not decoration. Every transition should communicate something:
+## Tables
 
-- Use `transition-all duration-[600ms]` or slower for state changes that deserve attention (active indicators, slide transitions)
-- Entrance animations should be **staggered**, not simultaneous
-- Prefer `opacity` + `translateY` exits over instant removes — things should leave gracefully
-- Respect `prefers-reduced-motion` — wrap keyframe animations in the media query
+- Keep headers, intro content, tabs, and pagination inside the standard admin
+  container. Only table wrappers break out to near-full viewport width.
+- Use the shared `neo-table` wrapper for horizontal overflow and a raised
+  neumorphic shadow. Rows remain flat and have no hover animation.
+- Tables do not use visible borders or separator lines.
+- Use `text-sm` as the minimum table text size.
+- Keep every table header label on one line with `whitespace-nowrap`; allow the
+  table wrapper to scroll horizontally when necessary.
+- Keep every table value on one line. Use `table-auto` so columns size to their
+  content and let the wrapper scroll horizontally. Never wrap, break, or squeeze
+  cell values.
+- Header labels use Czech display names while data access and sorting retain the
+  original API keys.
+- Display `Exportováno do CDFP` as `Expo…` and expose the full label through a
+  hover tooltip and accessible label.
+- The first cell in every row is a semantic row header (`th scope="row"`).
+- Use alternating rows:
+  - odd: `bg-background`
+  - even: `bg-foreground/[0.04]`
+- Tables have no row hover effect. Use a subtle flat header fill, alternating
+  row surfaces, and primary-colored row headers as the permanent treatment.
+- Keep sortable headers keyboard accessible and retain `aria-sort`.
+- `isReported` / `is_reported` is intentionally hidden.
+- Format `created_dt` and `updated_dt` as `D.M.YYYY` without leading zeros.
+- When sorting by `created_dt` or `updated_dt`, compare calendar dates first and
+  use `id` as the secondary key for rows on the same day. Apply the selected
+  direction to both keys.
 
-### Typography first
+## Statistics
 
-- Font size drives hierarchy, not containers
-- Use `clamp()` for fluid headings — `clamp(1.25rem, 3vw, 1.75rem)` is a good starting point
-- Quote marks, pull quotes, and large numerals are design elements, not just punctuation
-- Two weights only: `400` regular, `500` medium. Never `600` or `700` — they fight the layout
+- Statistics are derived from both agent and subject datasets.
+- Origin/source fields may use common variants such as `origin`, `source`,
+  `sourceOrigin`, `domain`, or `website`.
+- “Naposledy nalezen nový agent” is calculated from `created_dt` (or its
+  camel-case equivalent), never `updated_dt`.
+- “Currently syncing” comes from the authenticated backend GET endpoint
+  `/api/v2/admin/data/utils/get`, which returns `start_char` from agent sync row
+  `id = 1` in the `utils` table.
+- Display today's date as `Dnes`, yesterday as `Včera`, and older dates as
+  `D.M.YYYY`.
 
-### Color is intentional
+## Typography and Color
 
-- `--primary` for emphasis, `--secondary` for supporting text, `--foreground/30` for muted states
-- Stars: `#f0a500` — warm, not neon
-- Active indicators use `--primary` at full opacity; inactive use `--foreground/30`
-- No gradients. No shadows. Flat surfaces, sharp accents
+- Use weights `400` and `500` only.
+- Dashboard headings must not exceed 28px.
+- Use `clamp()` for responsive headings.
+- Use semantic color tokens (`primary`, `secondary`, `foreground`,
+  `muted-foreground`) rather than raw component colors.
+- Maintain WCAG AA contrast: 4.5:1 for normal text and 3:1 for meaningful UI
+  indicators.
+- Do not communicate state through color alone; combine color with text, icons,
+  position, or inset/raised depth.
 
----
+## Motion and Accessibility
 
-## Components
+- Keep state transitions around 200ms.
+- Respect the global `prefers-reduced-motion` behavior.
+- Interactive targets must be at least 44px on touch layouts.
+- Preserve the skip link, semantic landmarks, heading order, table semantics,
+  visible keyboard focus, and accessible labels.
 
-### Reviews
+## Component Structure
 
-Vertical Swiper with a pill-shaped active bullet pagination. No cards. The quote fills the stage at headline scale — one review at a time, full attention.
+Do not rebuild the dashboard as one large component. Keep responsibilities in:
 
+```text
+src/components/AdminDashboard.tsx       # data and state coordinator only
+src/components/admin/AdminHeader.tsx    # header and intro
+src/components/admin/DashboardTabs.tsx  # dataset navigation
+src/components/admin/DataTable.tsx      # sortable dataset table
+src/components/admin/StatisticsView.tsx # statistics metrics and filters
+src/components/admin/TablePagination.tsx
+src/components/admin/types.ts
+src/components/admin/utils.ts
 ```
-stage: full-width quote + author + stars
-pagination: vertical pill bullets, right-aligned, clickable
-transition: duration-[600ms] on bullets, Swiper speed ~600ms
-autoplay: 4500ms delay, pauseOnMouseEnter
+
+New substantial behavior belongs in a focused component or utility. Avoid files
+that mix fetching, aggregation, presentation, filtering, and pagination.
+
+## Verification
+
+After UI changes, run:
+
+```bash
+npm run typecheck
+npm run build
 ```
 
-### Pagination bullets
-
-```css
-.swiper-pagination-bullet        → h-1.5 w-1.5 rounded-full bg-foreground/30
-.swiper-pagination-bullet-active → h-8 w-2.5 bg-primary rounded-full
-transition-all duration-[600ms] on both states
-```
-
-### Section headers
-
-Plain text, no card wrapper. Eyebrow → title → description stacked with tight rhythm.
-
----
-
-## What to avoid
-
-| Instead of…                      | Do this                                        |
-| -------------------------------- | ---------------------------------------------- |
-| `<div className="card">`         | Full-bleed section with whitespace             |
-| Swiper horizontal card carousel  | Vertical typographic stage                     |
-| `font-bold` / `font-semibold`    | `font-medium` (`500`) at most                  |
-| Gradient backgrounds             | Flat `--background` with strong type           |
-| Pagination dots (circles)        | Pill bullets that grow on active               |
-| `opacity-50` hover on everything | Intentional `opacity-55` with `transition-all` |
-| Fixed pixel font sizes           | `clamp()` for headings, `rem` for body         |
-
----
-
-## File structure
-
-```
-components/
-  ReviewsSection.tsx   ← vertical swiper, no cards
-  ...
-
-styles/
-  reviews.css          ← @apply-based, Tailwind tokens only
-  ...
-```
-
----
-
-> If you're about to wrap something in a card, stop. Ask whether whitespace, type scale, or a single divider can do the same job. It usually can.
+Run `npm run lint` as well, but note that the generated `next-env.d.ts` currently
+triggers the repository's triple-slash-reference lint rule.
